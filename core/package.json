@@ -1,0 +1,21 @@
+{
+  "name": "mov2-core",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0",
+    "x-ray": "^2.3.4"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.6",
+    "@types/node-fetch": "^2.5.6"
+  }
+}
