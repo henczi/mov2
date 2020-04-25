@@ -3,9 +3,6 @@ var bodyParser = require('body-parser');
 
 const PORT = 3000;
 
-const inda = require('./service/inda');
-const videa = require('./service/videa');
-
 var app = express();
 
 app.set('json spaces', 2)
@@ -15,13 +12,7 @@ app.use(bodyParser.json());
 // for parsing application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({	extended: true }));
 
-app.get('/api/inda/search', async function (req, res, next) {
-	res.json(await inda.search(req.query))
-})
-
-app.get('/api/videa/search', async function (req, res, next) {
-	res.json(await videa.search(req.query.search, req.query.page))
-})
+require('./api')(app);
 
 // Error handling -- 404
 app.use(function (req, res, next) {

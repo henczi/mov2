@@ -3,7 +3,7 @@ const xray = require('x-ray');
 
 const x = xray({
   filters: {
-    trim: v => v.trim(),
+    trim: v => v && v.trim(),
     splitSpaceFirst: v => v && v.split(' ')[0],
     splitSlashLast: v => v && v.split('/').pop(),
     parsePageNumber: v => v && v.split('=').pop()
@@ -21,7 +21,7 @@ async function search(term, page = 1) {
       {
         title: '.panel-video-title > a | trim',
         href: '.video-link@href',
-        image: '.video-thumbnail@href',
+        image: '.video-thumbnail@src',
         duration: '.video-length | trim',
         uploadTime: '.panel-video-upload > span | trim',
         userId: '.panel-video-uploader@href | splitSlashLast | trim',

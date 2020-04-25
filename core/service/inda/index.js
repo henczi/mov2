@@ -6,11 +6,11 @@ const requestHeaders = { 'Cookie': '', 'User-Agent': 'curl' };
 
 const x = xray({
   filters: {
-    trim: v => v.trim(),
-    splitSpaceFirst: v => v.split(' ')[0],
-    splitSlashLast: v => v.split('/').pop(),
-    parseUrlFromStyle: v => (v.match(/url\((.*?)\)/) || [])[1] || null,
-    parsePageNumber: v => (v.match(/&apos;p_uni&apos;,&apos;(.*?)&apos;/) || [])[1] || null
+    trim: v => v && v.trim(),
+    splitSpaceFirst: v => v && v.split(' ')[0],
+    splitSlashLast: v => v && v.split('/').pop(),
+    parseUrlFromStyle: v => v && (v.match(/url\((.*?)\)/) || [])[1] || null,
+    parsePageNumber: v => v && (v.match(/&apos;p_uni&apos;,&apos;(.*?)&apos;/) || [])[1] || null
   }
 })
 .driver((ctx) => fetch(ctx.url, { method: 'GET', headers: requestHeaders }).then(x => x.text()))
