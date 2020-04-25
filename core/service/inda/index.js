@@ -1,7 +1,6 @@
 const fetch = require('node-fetch');
 const xray = require('x-ray');
 
-const searchRequestBase = 'https://indavideo.hu/search?isAJAXrequest=1';
 const requestHeaders = { 'Cookie': '', 'User-Agent': 'curl' };
 
 const x = xray({
@@ -16,7 +15,17 @@ const x = xray({
 .driver((ctx) => fetch(ctx.url, { method: 'GET', headers: requestHeaders }).then(x => x.text()))
 
 async function search(options = {}) {
-  const url = searchRequestBase + Object.keys(options).map(key => `&${key}=${options[key]}`).join('');
+  let url = `https://indavideo.hu/search?isAJAXrequest=1`;
+  if (options.search) url += `&search=${options.search}`;
+  if (options.page) url += `&p_uni=${options.page}`;
+  if (options.sort) url += `&sort_mode=${options.sort}`;
+  if (options.category) url += `&channel_constraint=${options.channel}`;
+  if (options.channel) url += `&user_constraint=${options.channel}`;
+  else if (options.user) url += `&user_constraint=${options.user}`;
+  if (options.age) url += `&age=${options.age}`;
+  if (options.highlight) url += `&highlight=1`;
+  if (options.adult) url += `&adult=1`;
+  
   const json = await x(url, '.items', {
     totalCount: '.page_title | splitSpaceFirst',
     currentPage: '.pager_inner > div > strong',
