@@ -1,5 +1,6 @@
 <script>
-  import Card from "./VideoCard.svelte";
+  import Card from "./ShelfCard.svelte";
+  import CircleButton from "../../elements/CircleButton.svelte";
   export let headerText;
   export let headerImage;
   export let searchBase;
@@ -54,12 +55,9 @@
       {/each}
       {#if shelf.hasMore && !shelf.loading}
         <div class="pr-5 flex">
-          <button on:click={() => page(shelf.nextPage)}
-            class="self-center text-center flex-shrink-0 w-20 h-20 m-5 p-3
-            rounded-full bg-gray-900 text-gray-100 outline-none focus:bg-gray-100
-            focus:text-gray-900">
+          <CircleButton s={20} on:click={() => page(shelf.nextPage)}>
             <i class="fas fa-3x fa-chevron-right" />
-          </button>
+          </CircleButton>
         </div>
       {/if}
     {:else if !shelf.loading}

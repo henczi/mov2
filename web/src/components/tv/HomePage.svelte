@@ -1,7 +1,8 @@
 <script>
   import { onMount, onDestroy } from "svelte";
-  import SearchBar from "./SearchBar.svelte";
-  import HomeShelf from "./HomeShelf.svelte";
+  import SearchBar from "./search/SearchBar.svelte";
+  import HomeShelf from "./shelf/HomeShelf.svelte";
+  import DetailCard from "./detail/DetailCard.svelte";
 
   let term = '';
 
@@ -22,8 +23,10 @@
   </div>
 
   <div class="shelf-list overflow-y-auto">
-    <HomeShelf term={term || ''} searchBase="/api/mock/search" headerText="Mock" />
+    <HomeShelf term={term || ''} searchBase="/api/mock/search" headerText="Home Server" />
     <HomeShelf term={term || ''} searchBase="/api/inda/search" headerImage="inda.png" />
     <HomeShelf term={term || 'alma'} searchBase="/api/videa/search" headerImage="videa.png" />
   </div>
+<!-- 
+  <DetailCard></DetailCard> -->
 </div>
