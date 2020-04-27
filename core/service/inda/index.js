@@ -16,13 +16,13 @@ const x = xray({
 
 async function search(options = {}) {
   let url = `https://indavideo.hu/search?isAJAXrequest=1`;
-  if (options.search) url += `&search=${options.search}`;
-  if (options.page) url += `&p_uni=${options.page}`;
-  if (options.sort) url += `&sort_mode=${options.sort}`;
-  if (options.category) url += `&channel_constraint=${options.channel}`;
-  if (options.channel) url += `&user_constraint=${options.channel}`;
-  else if (options.user) url += `&user_constraint=${options.user}`;
-  if (options.age) url += `&age=${options.age}`;
+  if (options.search) url += `&search=${encodeURIComponent(options.search)}`;
+  if (options.page) url += `&p_uni=${encodeURIComponent(options.page)}`;
+  if (options.sort) url += `&sort_mode=${encodeURIComponent(options.sort)}`;
+  if (options.category) url += `&channel_constraint=${encodeURIComponent(options.channel)}`;
+  if (options.channel) url += `&user_constraint=${encodeURIComponent(options.channel)}`;
+  else if (options.user) url += `&user_constraint=${encodeURIComponent(options.user)}`;
+  if (options.age) url += `&age=${encodeURIComponent(options.age)}`;
   if (options.highlight) url += `&highlight=1`;
   if (options.adult) url += `&adult=1`;
   
