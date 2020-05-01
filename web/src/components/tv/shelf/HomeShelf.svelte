@@ -34,11 +34,18 @@
         shelf.loading = false;
       });
   }
+
+  let element;
+  function loadMore() {
+    // TODO
+    [].slice.call(element.querySelectorAll('.shelf-content .card-container .focusable')).pop().focus(); // HACK
+    page(shelf.nextPage)
+  }
   
   $: search(term);
 </script>
 
-<div class="shelf my-5">
+<div class="shelf my-5" bind:this={element}>
   {#if headerText}
     <div class="shelf-header text-white font-bold text-4xl">{headerText}</div>
   {:else}
@@ -55,7 +62,7 @@
       {/each}
       {#if shelf.hasMore && !shelf.loading}
         <div class="pr-5 flex">
-          <CircleButton s={20} on:click={() => page(shelf.nextPage)}>
+          <CircleButton s={20} on:click={loadMore}>
             <i class="fas fa-3x fa-chevron-right" />
           </CircleButton>
         </div>

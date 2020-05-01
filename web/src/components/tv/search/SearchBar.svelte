@@ -1,4 +1,5 @@
 <script>
+  import { focusable } from '../../../helpers/focusable';
   import { slide } from 'svelte/transition';
   import { flip } from 'svelte/animate';
   import { createEventDispatcher } from 'svelte';
@@ -19,12 +20,12 @@
   let optionsOpen = false;
 </script>
 
-<div class="text-gray-100 py-4">
+<div class="search-bar text-gray-100 py-4">
   <div class="flex justify-between mb-4">
     <div class="search flex border-b-2 ">
-      <input bind:value={term} class="text-5xl font-bold bg-transparent outline-none" type="text" placeholder="Search" on:keydown={keydown} />
+      <input use:focusable bind:value={term} class="text-5xl font-bold bg-transparent outline-none" type="text" placeholder="Search" on:keydown={keydown} />
 
-      <button class="flex-grow-0 text-3xl p-3 ml-5 outline-none text-gray-600 hover:text-gray-100 focus:text-gray-100" on:click={doSearch}>
+      <button use:focusable class="flex-grow-0 text-3xl p-3 ml-5 outline-none text-gray-600 hover:text-gray-100 focus:text-gray-100" on:click={doSearch}>
         <i class="fas fa-search" />
       </button>
     </div>

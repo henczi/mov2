@@ -1,6 +1,13 @@
 <script>
+  import { focusable } from '../../../helpers/focusable';
+  import { goto } from '@sapper/app';
+
   export let item;
   let placeholderImage = "https://via.placeholder.com/350x200/333333/ACACAC/?text=No+Image";
+
+  function select() {
+    goto('/follow?l=' + item.href);
+  }
 </script>
 
 <style>
@@ -15,7 +22,7 @@
   }
 </style>
 
-<div tabindex="0" class="card h-full flex flex-col overflow-hidden text-gray-100 outline-none focus:bg-white focus:text-gray-800" style="width: 28rem">
+<div use:focusable={select} class="card h-full flex flex-col overflow-hidden text-gray-100 outline-none focus:bg-white focus:text-gray-800" style="width: 28rem">
   <div class="relative">
     <div
     class="h-64 bg-black bg-cover bg-no-repeat bg-center"
