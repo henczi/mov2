@@ -1,5 +1,6 @@
 <script>
   import { onMount, onDestroy } from "svelte";
+  import { selected } from "./selected-store.js"
   import SearchBar from "./search/SearchBar.svelte";
   import HomeShelf from "./shelf/HomeShelf.svelte";
   import DetailCard from "./detail/DetailCard.svelte";
@@ -25,8 +26,10 @@
   <div class="shelf-list overflow-y-auto">
     <HomeShelf term={term || ''} searchBase="/api/mock/search" headerText="Home Server" />
     <HomeShelf term={term || ''} searchBase="/api/inda/search" headerImage="inda.png" />
-    <HomeShelf term={term || 'alma'} searchBase="/api/videa/search" headerImage="videa.png" />
+    <HomeShelf term={term || ''} searchBase="/api/videa/search" headerImage="videa.png" />
   </div>
-<!-- 
-  <DetailCard></DetailCard> -->
+
+  {#if $selected}
+    <DetailCard item={$selected}></DetailCard>
+  {/if}
 </div>

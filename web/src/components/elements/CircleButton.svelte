@@ -1,6 +1,6 @@
 <script>
   import { focusable } from '../../helpers/focusable';
-  export let s = 16;
+  export let s = 20;
 </script>
 
 <button

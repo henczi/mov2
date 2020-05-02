@@ -1,12 +1,16 @@
 <script>
   import { focusable } from '../../../helpers/focusable';
+  import { selected } from "../selected-store.js"
   import { goto } from '@sapper/app';
+
+  import { send, receive } from '../item-transition.js';
 
   export let item;
   let placeholderImage = "https://via.placeholder.com/350x200/333333/ACACAC/?text=No+Image";
 
   function select() {
-    goto('/follow?l=' + item.href);
+    // goto('/player?src=' + item.href);
+    selected.set(item);
   }
 </script>
 
@@ -22,7 +26,8 @@
   }
 </style>
 
-<div use:focusable={select} class="card h-full flex flex-col overflow-hidden text-gray-100 outline-none focus:bg-white focus:text-gray-800" style="width: 28rem">
+{#if $selected != item}
+<div use:focusable={select} on:click={select} class="card h-full flex flex-col overflow-hidden text-gray-100 outline-none focus:bg-white focus:text-gray-800" style="width: 28rem" in:receive|local={{key:item.href}} out:send|local={{key:item.href}}>
   <div class="relative">
     <div
     class="h-64 bg-black bg-cover bg-no-repeat bg-center"
@@ -42,3 +47,6 @@
     <div class="text-gray-600">{item.userName} • {item.uploadTime}</div>
   </div>
 </div>
+{:else}
+<div style="width: 28rem"></div>
+{/if}
