@@ -2,22 +2,12 @@
   import { onMount, onDestroy } from "svelte";
   import { selected } from "./selected-store.js"
   import { searchOptions } from "./search-options.js"
-  import { createShelf } from "./shelf/shelf-store.js";
+  import { shelfs, search, initShelfs } from "./shelfs.js";
   import SearchBar from "./search/SearchBar.svelte";
   import HomeShelf from "./shelf/HomeShelf.svelte";
   import DetailCard from "./detail/DetailCard.svelte";
 
-  let shelfs = {
-    mock: createShelf("/api/mock/search"),
-    inda: createShelf("/api/inda/search"),
-    videa: createShelf("/api/videa/search"),
-  };
-
-  function search(params) {
-    Object.keys(shelfs).forEach(x => shelfs[x].search(params))
-  }
-
-  onMount(() => search({ term: '' }));
+  onMount(() => initShelfs());
   onDestroy(() => console.log("onDestroy"));
 </script>
 
