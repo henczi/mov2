@@ -1,6 +1,7 @@
 <script>
   import { onMount, onDestroy } from "svelte";
   import { selected } from "./selected-store.js"
+  import { searchOptions } from "./search-options.js"
   import SearchBar from "./search/SearchBar.svelte";
   import HomeShelf from "./shelf/HomeShelf.svelte";
   import DetailCard from "./detail/DetailCard.svelte";
@@ -20,7 +21,7 @@
 
 <div class="page-container flex flex-col bg-gray-800 pt-5 pl-5">
   <div class="flex-shirnk-0 pr-5">
-    <SearchBar on:search={s => term = s.detail.term} />
+    <SearchBar {searchOptions} on:search={s => (term = s.detail.term, console.log(s.detail))} />
   </div>
 
   <div class="shelf-list overflow-y-auto">

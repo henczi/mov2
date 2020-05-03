@@ -4,13 +4,22 @@
   import { flip } from 'svelte/animate';
   import { createEventDispatcher } from 'svelte';
   import CircleButton from "../../elements/CircleButton.svelte";
+  import Select from "./options/Select.svelte";
+
+  let mapTypeToComponent = {
+    select: Select
+  };
+
+  /** @type {{ key: string, name: string, type: string, props: {} }[]}*/
+  export let searchOptions = [];
 
   const dispatch = createEventDispatcher();
 
   let term = '';
+  let options = {};
   
   function doSearch() {
-		dispatch('search', { term });
+		dispatch('search', { term, options });
   }
 
   function keydown(event) {
@@ -34,7 +43,11 @@
 
   {#if optionsOpen}
     <div class="options my-4" transition:slide>
-      WIP
+      <div class="flex flex-wrap justify-between">
+        {#each searchOptions as so}
+          <svelte:component this={mapTypeToComponent[so.type]} bind:value={options[so.key]} name={so.name} {...so.props} ></svelte:component>
+        {/each}
+      </div>
     </div>
   {/if}
 </div>
