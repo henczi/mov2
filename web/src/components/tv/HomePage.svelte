@@ -2,13 +2,22 @@
   import { onMount, onDestroy } from "svelte";
   import { selected } from "./selected-store.js"
   import { searchOptions } from "./search-options.js"
+  import { createShelf } from "./shelf/shelf-store.js";
   import SearchBar from "./search/SearchBar.svelte";
   import HomeShelf from "./shelf/HomeShelf.svelte";
   import DetailCard from "./detail/DetailCard.svelte";
 
-  let term = '';
+  let shelfs = {
+    mock: createShelf("/api/mock/search"),
+    inda: createShelf("/api/inda/search"),
+    videa: createShelf("/api/videa/search"),
+  };
 
-  onMount(() => console.log("onMount"));
+  function search(params) {
+    Object.keys(shelfs).forEach(x => shelfs[x].search(params))
+  }
+
+  onMount(() => search({ term: '' }));
   onDestroy(() => console.log("onDestroy"));
 </script>
 
@@ -21,13 +30,13 @@
 
 <div class="page-container flex flex-col bg-gray-800 pt-5 pl-5">
   <div class="flex-shirnk-0 pr-5">
-    <SearchBar {searchOptions} on:search={s => (term = s.detail.term, console.log(s.detail))} />
+    <SearchBar {searchOptions} on:search={s => search(s.detail)} />
   </div>
 
   <div class="shelf-list overflow-y-auto">
-    <HomeShelf term={term || ''} searchBase="/api/mock/search" headerText="Home Server" />
-    <HomeShelf term={term || ''} searchBase="/api/inda/search" headerImage="inda.png" />
-    <HomeShelf term={term || ''} searchBase="/api/videa/search" headerImage="videa.png" />
+    <HomeShelf shelf={shelfs.mock} headerText="Home Server" />
+    <HomeShelf shelf={shelfs.inda} headerImage="inda.png" />
+    <HomeShelf shelf={shelfs.videa} headerImage="videa.png" />
   </div>
 
   {#if $selected}
