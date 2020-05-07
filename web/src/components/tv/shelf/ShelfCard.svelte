@@ -1,12 +1,13 @@
 <script>
-  import { focusable } from '../../../helpers/focusable';
-  import { selected } from "../selected-store.js"
-  import { goto } from '@sapper/app';
+  import { focusable } from "../../../helpers/focusable";
+  import { selected } from "../selected-store.js";
+  import { goto } from "@sapper/app";
 
-  import { send, receive } from '../item-transition.js';
+  import { send, receive } from "../item-transition.js";
 
   export let item;
-  let placeholderImage = "https://via.placeholder.com/350x200/333333/ACACAC/?text=No+Image";
+  let placeholderImage =
+    "https://via.placeholder.com/350x200/333333/ACACAC/?text=No+Image";
 
   function select() {
     // goto('/player?src=' + item.href);
@@ -19,34 +20,83 @@
     cursor: pointer;
     transform: scale(0.95);
     transition: 250ms transform ease;
+    height: 100%;
+    width: 28rem;
+    overflow: hidden;
   }
 
-  .card:focus, .card:hover {
+  .card:focus {
+    background-color: var(--color-white);
+    color: var(--color-dark);
+  }
+
+  .card:focus,
+  .card:hover {
     transform: none;
+  }
+
+  .card-image {
+    position: relative;
+  }
+
+  .card-image .image {
+    height: 16rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .card-image .duration-label {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 0.875rem;
+    margin: 0 0.75rem 0.5rem 0;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+  }
+
+  .info {
+    padding: 1rem 1.5rem;
+  }
+
+  .title {
+    font-weight: bold;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .upload {
+    margin-top: auto;
+    padding: 0.5rem 1.5rem;
+    border-top: 1px solid var(--color-mid-grey);
   }
 </style>
 
 {#if $selected != item}
-<div use:focusable={select} on:click={select} class="card h-full flex flex-col overflow-hidden text-gray-100 outline-none focus:bg-white focus:text-gray-800" style="width: 28rem" in:receive|local={{key:item.href}} out:send|local={{key:item.href}}>
-  <div class="relative">
-    <div
-    class="h-64 bg-black bg-cover bg-no-repeat bg-center"
-    style="background-image: url({item.image || placeholderImage})" />
-    <div class="absolute bottom-0 right-0 mb-2 mr-3 px-2 py-1 rounded text-sm text-gray-100 bg-gray-900">
-      {item.duration}
+  <div
+    use:focusable={select}
+    on:click={select}
+    class="card fley text-lighter"
+    in:receive|local={{ key: item.href }}
+    out:send|local={{ key: item.href }}>
+    <div class="card-image">
+      <div
+        class="image bg-black"
+        style="background-image: url({item.image || placeholderImage})" />
+      <div class="duration-label text-lighter bg-darker">{item.duration}</div>
+    </div>
+
+    <div class="info">
+      <div class="title">{item.title}</div>
+      {#if false && item.description}
+        <p class="description">{item.description}</p>
+      {/if}
+    </div>
+    <div class="upload">
+      <div class="text-mid-grey">{item.userName} • {item.uploadTime}</div>
     </div>
   </div>
-  
-  <div class="px-6 py-4">
-    <div class="font-bold text-xl mb-2">{item.title}</div>
-    {#if false && item.description}
-      <p class="text-base">{item.description}</p>
-    {/if}
-  </div>
-  <div class="mt-auto px-6 py-2 border-t border-gray-700">
-    <div class="text-gray-600">{item.userName} • {item.uploadTime}</div>
-  </div>
-</div>
 {:else}
-<div style="width: 28rem"></div>
+  <div style="width: 28rem" />
 {/if}

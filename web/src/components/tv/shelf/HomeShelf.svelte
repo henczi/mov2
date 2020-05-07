@@ -1,48 +1,86 @@
 <script>
   import Card from "./ShelfCard.svelte";
   import CircleButton from "../../elements/CircleButton.svelte";
-  export let headerText = '';
-  export let headerImage = '';
+  export let headerText = "";
+  export let headerImage = "";
 
   export let shelf;
 
   let element;
   function loadMore() {
     // TODO
-    [].slice.call(element.querySelectorAll('.shelf-content .card-container .focusable')).pop().focus(); // HACK
-    shelf.page($shelf.nextPage)
+    [].slice
+      .call(
+        element.querySelectorAll(".shelf-content .card-container .focusable")
+      )
+      .pop()
+      .focus(); // HACK
+    shelf.page($shelf.nextPage);
   }
 </script>
 
-<div class="shelf my-5" bind:this={element}>
+<style>
+  .shelf {
+    margin: 1.25rem 0;
+  }
+  .shelf .shelf-header {
+    font-weight: bold;
+    font-size: 2.25rem;
+  }
+
+  .shelf .shelf-header.image {
+    height: 2rem;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .shelf .shelf-content {
+    padding: 1rem 0;
+    overflow-y: auto;
+  }
+
+  .card-container {
+    padding-right: 1rem;
+  }
+  .has-more-container {
+    padding-right: 1rem;
+  }
+
+  .no-content {
+    font-size: 2.25rem;
+    font-weight: bold;
+  }
+
+  .loading {
+    padding-right: 1.25rem;
+  }
+</style>
+
+<div class="shelf" bind:this={element}>
   {#if headerText}
-    <div class="shelf-header text-white font-bold text-4xl">{headerText}</div>
+    <div class="shelf-header text-white">{headerText}</div>
   {:else}
-  <div
-    class="shelf-header h-8"
-    style="background: url('{headerImage}') no-repeat; background-size: contain;" />
+    <div class="shelf-header image" style="background-image: url('{headerImage}');" />
   {/if}
-  <div class="shelf-content py-4 flex overflow-x-auto">
+  <div class="shelf-content flex">
     {#if $shelf.list && $shelf.list.length}
       {#each $shelf.list as item}
-        <div class="card-container pr-4">
+        <div class="card-container">
           <Card {item} />
         </div>
       {/each}
       {#if $shelf.hasMore && !$shelf.loading}
-        <div class="pr-5 flex">
-          <CircleButton s={20} on:click={loadMore}>
+        <div class="has-more-container flex">
+          <CircleButton big on:click={loadMore}>
             <i class="fas fa-3x fa-chevron-right" />
           </CircleButton>
         </div>
       {/if}
     {:else if !$shelf.loading}
-      <div class="self-center text-gray-500 text-4xl font-bold">
-        No content :(
-      </div>
+      <div class="no-content self-center text-mid-grey">No content :(</div>
     {/if}
     {#if $shelf.loading}
-      <div class="self-center pr-5 text-gray-300 fa-5x">
+      <div class="loading self-center text-light fa-5x">
         <i class="fas fa-circle-notch fa-spin" />
       </div>
     {/if}

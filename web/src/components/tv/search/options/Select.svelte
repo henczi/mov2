@@ -15,15 +15,37 @@
   select(0);
 </script>
 
+<style>
+  .title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-right: 1rem;
+  }
+  button {
+    padding: 0.5rem 1rem;
+    margin-left: 0.5rem;
+    border: 2px solid transparent;
+  }
+
+  button:hover,
+  button:focus {
+    background-color: var(--color-lighter);
+    color: var(--color-darker);
+  }
+
+  button.selected {
+    border-color: var(--color-mid-grey);
+  }
+</style>
+
 <div class="flex items-center">
-  <div class="text-xl font-bold mr-4">{name}</div>
+  <div class="title">{name}</div>
   <div class="flex">
     {#each options as opt, index}
       <button
         use:focusable
-        class="px-4 py-2 ml-2 text-md bg-gray-900 text-gray-100 border-2 border-transparent border-solid
-        focus:bg-gray-100 focus:text-gray-900"
-        class:border-gray-600={isSelected(opt, value)}
+        class="bg-darker text-lighter"
+        class:selected={isSelected(opt, value)}
         on:click={() => select(index)}>
         {opt.label}
       </button>

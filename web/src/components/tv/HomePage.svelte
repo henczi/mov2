@@ -15,15 +15,23 @@
 .page-container {
   width: 100vw;
   height: 100vh;
+  padding: 0 0 1rem 1rem;
+}
+
+.search-segment {
+  padding-right: 1rem;
+}
+.shelf-list {
+  overflow-y: auto;
 }
 </style>
 
-<div class="page-container flex flex-col bg-gray-800 pt-5 pl-5">
-  <div class="flex-shirnk-0 pr-5">
+<div class="page-container fley bg-dark">
+  <div class="flex-no-shirnk search-segment">
     <SearchBar {searchOptions} on:search={s => search(s.detail)} />
   </div>
 
-  <div class="shelf-list overflow-y-auto">
+  <div class="shelf-list">
     <HomeShelf shelf={shelfs.mock} headerText="Home Server" />
     <HomeShelf shelf={shelfs.inda} headerImage="inda.png" />
     <HomeShelf shelf={shelfs.videa} headerImage="videa.png" />

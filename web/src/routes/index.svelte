@@ -1,5 +1,6 @@
 <script>
   import { goto } from '@sapper/app';
+  import { onMount } from 'svelte';
 
-  goto('tv');
+  onMount(() => goto('tv'));
 </script>
