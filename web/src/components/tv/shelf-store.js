@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 
 const tap = fn => v => (fn(v), v);
 
-function createShelf(searchBase) {
+function createShelf(searchBase, preserve = true) {
   let currentUnpagedQuery;
 
 	const { subscribe, update } = writable({
@@ -17,8 +17,9 @@ function createShelf(searchBase) {
 
   function search(params) {
     tapUpdate(shelf => shelf.list = []);
-    currentUnpagedQuery = `${searchBase}?search=${params.term}`
-    if (params.uploadedAt) currentUnpagedQuery += `&age=${params.uploadedAt}`;
+    const options = params.options || {};
+    const optionsQuery = Object.keys(options).map(key => `&${key}=${options[key]}`);
+    currentUnpagedQuery = `${searchBase}?search=${params.term}${optionsQuery}`;
     page();
   }
 
@@ -30,8 +31,13 @@ function createShelf(searchBase) {
         tapUpdate(shelf => {
           shelf.totalCount = x.totalCount;
           shelf.hasMore = x.nextPage && x.nextPage !== x.currentPage;
+          shelf.currentPage = x.currentPage;
+          shelf.previousPage = x.previousPage;
           shelf.nextPage = x.nextPage;
-          shelf.list = [...shelf.list, ...x.items];
+          if (preserve)
+            shelf.list = [...shelf.list, ...x.items];
+          else
+            shelf.list = [...x.items]
           shelf.loading = false;
         });
       });

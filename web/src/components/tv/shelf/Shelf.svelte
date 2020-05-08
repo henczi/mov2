@@ -1,5 +1,6 @@
 <script>
-  import Card from "./ShelfCard.svelte";
+  import Card from "../card/VideoCard.svelte";
+  import { selected } from "../selected-store.js";
   import CircleButton from "../../elements/CircleButton.svelte";
   export let headerText = "";
   export let headerImage = "";
@@ -40,7 +41,8 @@
   }
 
   .card-container {
-    padding-right: 1rem;
+    margin-right: 1rem;
+    width: 28rem;
   }
   .has-more-container {
     padding-right: 1rem;
@@ -65,8 +67,10 @@
   <div class="shelf-content flex">
     {#if $shelf.list && $shelf.list.length}
       {#each $shelf.list as item}
-        <div class="card-container">
-          <Card {item} />
+        <div class="card-container flex-no-shrink">
+          {#if item != $selected}
+            <Card {item} on:select={() => selected.set(item)} />
+          {/if}
         </div>
       {/each}
       {#if $shelf.hasMore && !$shelf.loading}

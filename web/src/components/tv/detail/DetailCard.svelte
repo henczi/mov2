@@ -12,9 +12,9 @@
   let rootEl;
 
   function select() {
-    const handler = item.href.includes('indavideo.hu') ? 'inda' : (item.href.includes('videa.hu') ? 'videa' : undefined);
+    const handler = item.href.includes('indavideo.hu') || item.href.includes('videa.hu');
     handler
-    ? goto(`/watch?p=${handler}&v=${item.href}`)
+    ? goto(`/watch?v=${item.href}`)
     : goto("/player?src=" + item.href);
   }
 

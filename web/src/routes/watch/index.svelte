@@ -1,6 +1,6 @@
 <script context="module">
   export async function preload(page, session) {
-    const p = page.query.p;
+    const p = page.query.v.includes('indavideo.hu') ? 'inda' : (page.query.v.includes('videa.hu') ? 'videa' : undefined);
     if (!['inda', 'videa'].includes(p)) {
       this.console.error(404, 'Wrong provider');
     }

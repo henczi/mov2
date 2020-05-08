@@ -1,4 +1,4 @@
-import { createShelf } from "./shelf/shelf-store.js";
+import { createShelf } from "./shelf-store.js";
 
 let inited = false;
 

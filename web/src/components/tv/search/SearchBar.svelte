@@ -19,7 +19,7 @@
   let options = {};
 
   function doSearch() {
-    dispatch("search", { ...options, term });
+    dispatch("search", { term, options });
   }
 
   function keydown(event) {

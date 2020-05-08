@@ -4,7 +4,7 @@
   import { searchOptions } from "./search-options.js"
   import { shelfs, search, initShelfs } from "./shelfs.js";
   import SearchBar from "./search/SearchBar.svelte";
-  import HomeShelf from "./shelf/HomeShelf.svelte";
+  import Shelf from "./shelf/Shelf.svelte";
   import DetailCard from "./detail/DetailCard.svelte";
 
   onMount(() => initShelfs());
@@ -12,12 +12,6 @@
 </script>
 
 <style>
-.page-container {
-  width: 100vw;
-  height: 100vh;
-  padding: 0 0 1rem 1rem;
-}
-
 .search-segment {
   padding-right: 1rem;
 }
@@ -26,18 +20,16 @@
 }
 </style>
 
-<div class="page-container fley bg-dark">
-  <div class="flex-no-shirnk search-segment">
-    <SearchBar {searchOptions} on:search={s => search(s.detail)} />
-  </div>
-
-  <div class="shelf-list">
-    <HomeShelf shelf={shelfs.mock} headerText="Home Server" />
-    <HomeShelf shelf={shelfs.inda} headerImage="inda.png" />
-    <HomeShelf shelf={shelfs.videa} headerImage="videa.png" />
-  </div>
-
-  {#if $selected}
-    <DetailCard item={$selected}></DetailCard>
-  {/if}
+<div class="flex-no-shirnk search-segment">
+  <SearchBar {searchOptions} on:search={s => search(s.detail)} />
 </div>
+
+<div class="shelf-list">
+  <Shelf shelf={shelfs.mock} headerText="Home Server" />
+  <Shelf shelf={shelfs.inda} headerImage="inda.png" />
+  <Shelf shelf={shelfs.videa} headerImage="videa.png" />
+</div>
+
+{#if $selected}
+  <DetailCard item={$selected}></DetailCard>
+{/if}

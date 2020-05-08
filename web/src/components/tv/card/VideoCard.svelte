@@ -1,17 +1,17 @@
 <script>
+  import { createEventDispatcher } from "svelte";
   import { focusable } from "../../../helpers/focusable";
-  import { selected } from "../selected-store.js";
-  import { goto } from "@sapper/app";
 
   import { send, receive } from "../item-transition.js";
+
+  const dispatch = createEventDispatcher();
 
   export let item;
   let placeholderImage =
     "https://via.placeholder.com/350x200/333333/ACACAC/?text=No+Image";
 
   function select() {
-    // goto('/player?src=' + item.href);
-    selected.set(item);
+    dispatch('select');
   }
 </script>
 
@@ -21,7 +21,6 @@
     transform: scale(0.95);
     transition: 250ms transform ease;
     height: 100%;
-    width: 28rem;
     overflow: hidden;
   }
 
@@ -73,30 +72,26 @@
   }
 </style>
 
-{#if $selected != item}
-  <div
-    use:focusable={select}
-    on:click={select}
-    class="card fley text-lighter"
-    in:receive|local={{ key: item.href }}
-    out:send|local={{ key: item.href }}>
-    <div class="card-image">
-      <div
-        class="image bg-black"
-        style="background-image: url({item.image || placeholderImage})" />
-      <div class="duration-label text-lighter bg-darker">{item.duration}</div>
-    </div>
-
-    <div class="info">
-      <div class="title">{item.title}</div>
-      {#if false && item.description}
-        <p class="description">{item.description}</p>
-      {/if}
-    </div>
-    <div class="upload">
-      <div class="text-mid-grey">{item.userName} • {item.uploadTime}</div>
-    </div>
+<div
+  use:focusable={select}
+  on:click={select}
+  class="card fley text-lighter"
+  in:receive|local={{ key: item.href }}
+  out:send|local={{ key: item.href }}>
+  <div class="card-image">
+    <div
+      class="image bg-black"
+      style="background-image: url({item.image || placeholderImage})" />
+    <div class="duration-label text-lighter bg-darker">{item.duration}</div>
   </div>
-{:else}
-  <div style="width: 28rem" />
-{/if}
+
+  <div class="info">
+    <div class="title">{item.title}</div>
+    {#if false && item.description}
+      <p class="description">{item.description}</p>
+    {/if}
+  </div>
+  <div class="upload">
+    <div class="text-mid-grey">{item.userName} • {item.uploadTime}</div>
+  </div>
+</div>
