@@ -1,0 +1,52 @@
+<script context="module">
+  export async function preload(page, session) {
+    const p = page.query.p;
+    if (!['inda', 'videa'].includes(p)) {
+      this.console.error(404, 'Wrong provider');
+    }
+    return { p, v: page.query.v };
+  }
+</script>
+
+<script>
+  import { onMount } from 'svelte';
+  export let p;
+  export let v;
+  let video;
+  let error;
+
+  onMount(async () => {
+    const videoInfo = await fetch(`/api/${p}/get_video_info?v=${v}`).then(x => x.json());
+    document.title = videoInfo.title;
+    video = videoInfo.sources.filter(x => x.resolution === '360p')[0] || videoInfo.sources[0]
+    if (!video) {
+      error = 'No available source';
+    }
+  })
+</script>
+
+<style>
+  .full-size {
+    background-color: black;
+    width: 100vw;
+    height: 100vh;
+  }
+  .flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
+
+<div class="full-size flex-center">
+  {#if video}
+    <video class="full-size" controls autoplay>
+      <source src={video.src} />
+    </video>
+  {/if}
+  {#if error}
+    <h1 class="text-light">
+      {error}
+    </h1>
+  {/if}
+</div>

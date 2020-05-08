@@ -12,7 +12,10 @@
   let rootEl;
 
   function select() {
-    goto("/player?src=" + item.href);
+    const handler = item.href.includes('indavideo.hu') ? 'inda' : (item.href.includes('videa.hu') ? 'videa' : undefined);
+    handler
+    ? goto(`/watch?p=${handler}&v=${item.href}`)
+    : goto("/player?src=" + item.href);
   }
 
   onMount(() => {
