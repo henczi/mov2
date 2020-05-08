@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const xray = require('x-ray');
 
+const getVideoInfoBaseUrl = 'http://amfphp.indavideo.hu/SYm0json.php/player.playerHandler.getVideoData/';
 const requestHeaders = { 'Cookie': '', 'User-Agent': 'curl' };
 
 const x = xray({
@@ -50,6 +51,28 @@ async function search(options = {}) {
 }
 
 
+async function getVideoInfo(videoUrl) {
+  const pageHTML = await fetch(videoUrl, { headers: requestHeaders }).then(x => x.text());
+  const videoId = (pageHTML.match(/player\/video\/(.{10})\"/) || '00')[1];
+  const response = await fetch(getVideoInfoBaseUrl + videoId, { headers: requestHeaders }).then(x => x.json())
+  
+  const sources = ['360', '720', '1080']
+    .filter(x => response.data.filesh[x])
+    .map(x => ({
+      src: response.data.video_files.filter(o => o.includes(`.${x}.mp4`))[0] + '&token=' + response.data.filesh[x],
+      mime: 'video/mp4',
+      resolution: `${x}p`,
+    }));
+
+  return {
+    userName: response.data.user_name,
+    title: response.data.title,
+    videoId,
+    sources,
+  }
+}
+
 module.exports = {
-  search
+  search,
+  getVideoInfo,
 }

@@ -1,5 +1,8 @@
 const fetch = require('node-fetch');
+const xmlParser = require('fast-xml-parser');
 const xray = require('x-ray');
+
+const getVideoInfoBaseUrl = 'https://videa.hu/videaplayer_get_xml.php?v='
 
 const x = xray({
   filters: {
@@ -32,6 +35,29 @@ async function search(term, page = 1) {
   return json;
 }
 
+async function getVideoInfo(videoUrl) {
+  const pageHTML = await fetch(videoUrl).then(x => x.text());
+  const videoId = (pageHTML.match(/player\/v\/(.{16})\?/) || '00')[1];
+  const responseXml = await fetch(getVideoInfoBaseUrl + videoId).then(x => x.text())
+
+  const response = xmlParser.parse(responseXml, { ignoreAttributes: false });
+
+  const sources = response.videa_video.video_sources.video_source.map(x => ({
+    src: `https:${x['#text'].replace(/&amp;/g, '&')}`,
+    resolution: x['@_name'],
+    mime: x['@_mimetype'],
+    codecs: x['@_codecs'],
+  }));
+
+  return {
+    userName: null,
+    title: response.videa_video.video.title,
+    videoId,
+    sources,
+  }
+}
+
 module.exports = {
-  search
+  search,
+  getVideoInfo,
 }
