@@ -3,11 +3,7 @@
   import SearchBar from '../../../components/tv/search/SearchBar.svelte';
   import Grid from '../../../components/tv/grid/Grid.svelte';
   import { searchOptions } from './_search-options.js';
-  import { manager, init } from './_search-manager.js';
-
-  function search(params) {
-
-  }
+  import { manager, search, init } from './_search-manager.js';
 
   onMount(() => init());
 </script>

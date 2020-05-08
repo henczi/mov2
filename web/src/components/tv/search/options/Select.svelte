@@ -36,15 +36,22 @@
   button.selected {
     border-color: var(--color-mid-grey);
   }
+
+  .options {
+    flex-wrap: wrap;
+  }
+  .option {
+    margin: 0.25rem;
+  }
 </style>
 
 <div class="flex items-center">
   <div class="title">{name}</div>
-  <div class="flex">
+  <div class="options flex">
     {#each options as opt, index}
       <button
         use:focusable
-        class="bg-darker text-lighter"
+        class="option bg-darker text-lighter"
         class:selected={isSelected(opt, value)}
         on:click={() => select(index)}>
         {opt.label}

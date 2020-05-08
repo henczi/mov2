@@ -15,5 +15,6 @@ function init() {
 
 export {
   shelf as manager,
+  search,
   init,
 }

@@ -66,6 +66,10 @@
   .options {
     margin: 1rem 0;
   }
+
+  .search-option-container {
+    margin-bottom: 0.5rem;
+  }
 </style>
 
 <div class="search-bar text-lighter">
@@ -91,11 +95,13 @@
     <div class="options" transition:slide>
       <div class="flex flex-wrap justify-between">
         {#each searchOptions as so}
-          <svelte:component
-            this={mapTypeToComponent[so.type]}
-            bind:value={options[so.key]}
-            name={so.name}
-            {...so.props} />
+          <div class="search-option-container">
+            <svelte:component
+              this={mapTypeToComponent[so.type]}
+              bind:value={options[so.key]}
+              name={so.name}
+              {...so.props} />
+          </div>
         {/each}
       </div>
     </div>

@@ -18,7 +18,7 @@ function createShelf(searchBase, preserve = true) {
   function search(params) {
     tapUpdate(shelf => shelf.list = []);
     const options = params.options || {};
-    const optionsQuery = Object.keys(options).map(key => `&${key}=${options[key]}`);
+    const optionsQuery = Object.keys(options).map(key => `&${key}=${options[key]}`).join('');
     currentUnpagedQuery = `${searchBase}?search=${params.term}${optionsQuery}`;
     page();
   }
