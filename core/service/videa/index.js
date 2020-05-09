@@ -44,7 +44,10 @@ async function getVideoInfo(videoUrl) {
 
   const response = xmlParser.parse(responseXml, { ignoreAttributes: false });
 
-  const sources = response.videa_video.video_sources.video_source.map(x => ({
+  const s = response.videa_video.video_sources.video_source.map
+    ? response.videa_video.video_sources.video_source
+    : [response.videa_video.video_sources.video_source];
+  const sources = s.map(x => ({
     src: `https:${x['#text'].replace(/&amp;/g, '&')}`,
     resolution: x['@_name'],
     mime: x['@_mimetype'],
