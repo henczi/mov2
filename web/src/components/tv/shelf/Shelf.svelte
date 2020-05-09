@@ -29,12 +29,6 @@
     font-size: 2.25rem;
   }
 
-  .shelf .shelf-header.image {
-    height: 2rem;
-    background-repeat: no-repeat;
-    background-size: contain;
-  }
-
   .shelf .shelf-content {
     padding: 1rem 0;
     overflow-y: auto;
@@ -62,7 +56,7 @@
   {#if headerText}
     <div class="shelf-header text-white">{headerText}</div>
   {:else}
-    <div class="shelf-header image" style="background-image: url('{headerImage}');" />
+    <img height="32" src={headerImage} alt="header title {headerImage}">
   {/if}
   <div class="shelf-content flex">
     {#if $shelf.list && $shelf.list.length}

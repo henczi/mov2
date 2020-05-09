@@ -12,6 +12,7 @@
 
   /** @type {{ key: string, name: string, type: string, props: {} }[]}*/
   export let searchOptions = [];
+  export let imageSrc = '';
 
   const dispatch = createEventDispatcher();
 
@@ -37,7 +38,6 @@
   .search-container {
     margin-bottom: 1rem;
   }
-
   .search-container .search {
     border-bottom: 2px solid;
   }
@@ -85,6 +85,9 @@
       <button use:focusable class="text-mid-grey" on:click={doSearch}>
         <i class="fas fa-search" />
       </button>
+      {#if imageSrc}
+        <img class="self-center" height="32" src={imageSrc} alt="search image">
+      {/if}
     </div>
     <CircleButton on:click={() => (optionsOpen = !optionsOpen)}>
       <i class="fas fa-cogs" />

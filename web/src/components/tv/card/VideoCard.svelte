@@ -1,6 +1,7 @@
 <script>
   import { createEventDispatcher } from "svelte";
   import { focusable } from "../../../helpers/focusable";
+  import Link from "../../elements/Link.svelte";
 
   import { send, receive } from "../item-transition.js";
 
@@ -78,15 +79,19 @@
   class="card fley text-lighter"
   in:receive|local={{ key: item.href }}
   out:send|local={{ key: item.href }}>
-  <div class="card-image">
-    <div
-      class="image bg-black"
-      style="background-image: url({item.image || placeholderImage})" />
-    <div class="duration-label text-lighter bg-darker">{item.duration}</div>
-  </div>
+  <Link href="/watch?v={item.href}">
+    <div class="card-image">
+      <div
+        class="image bg-black"
+        style="background-image: url({item.image || placeholderImage})" />
+      <div class="duration-label text-lighter bg-darker">{item.duration}</div>
+    </div>
+  </Link>
 
   <div class="info">
-    <div class="title">{item.title}</div>
+    <Link href="/watch?v={item.href}">
+      <div class="title">{item.title}</div>
+    </Link>
     {#if false && item.description}
       <p class="description">{item.description}</p>
     {/if}

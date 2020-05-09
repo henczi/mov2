@@ -21,6 +21,7 @@
     min-width: 25rem;
     max-width: 50rem;
     flex-grow: 1;
+    flex-basis: 1rem;
   }
 
   .current-page {

@@ -19,15 +19,15 @@
 }
 .content-container{
   margin-top: 2rem;
-  overflow-y: auto
+  overflow-y: auto;
 }
 </style>
 
-<WindowTitle title="IndaVideo"/>
+<WindowTitle title="Videa"/>
 
 <div class="page fley">
   <div class="flex-no-shirnk search-segment">
-    <SearchBar {searchOptions} on:search={s => search(s.detail)} imageSrc="inda.png" />
+    <SearchBar {searchOptions} on:search={s => search(s.detail)} imageSrc="videa.png" />
   </div>
 
   <div class="content-container flex-grow">

@@ -1,4 +1,5 @@
 <script>
+  import WindowTitle from '../../components/elements/WindowTitle.svelte';
   import HomePage from '../../components/tv/HomePage.svelte';
 </script>
 
@@ -8,6 +9,8 @@
   padding: 1rem 0 0 1rem;
 }
 </style>
+
+<WindowTitle/>
 
 <div class="l-padding fley">
   <HomePage/>
