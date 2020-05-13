@@ -14,31 +14,6 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 	<script src="https://luke-chang.github.io/js-spatial-navigation/spatial_navigation.js"></script>
 
-	<script>
-    window.addEventListener('load', function() {
-      SpatialNavigation.init();
-
-			SpatialNavigation.add('search-bar', {
-				selector: '.search-bar .focusable',
-				enterTo: 'last-focused'
-      });
-      SpatialNavigation.add({
-				selector: '.shelf-list .focusable',
-				straightOnly: true,
-				leaveFor: { up: '.search-bar input' },
-				enterTo: 'last-focused'
-			});
-			SpatialNavigation.add({
-				selector: '.page-result .focusable',
-				enterTo: 'last-focused'
-			});
-			SpatialNavigation.add({
-				selector: '.overlay .focusable',
-				restrict: 'self-only',
-			});
-    });
-  </script>
-
 	<!-- Sapper generates a <style> tag containing critical CSS
 	     for the current page. CSS for the rest of the app is
 	     lazily loaded when it precaches secondary pages -->
