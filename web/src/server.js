@@ -8,7 +8,8 @@ const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === 'development';
 
 //polka() // You can also use Express
-require('../../../../core/api.js')(express())
+express()
+	.use('/api', require('../../../../core/api.js'))
 	.use(
 		compression({ threshold: 0 }),
 		sirv('static', { dev }),

@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 // for parsing application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({	extended: true }));
 
-require('./api')(app);
+app.use('/api', require('./api.js'));
 
 // Error handling -- 404
 app.use(function (req, res, next) {
