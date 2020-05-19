@@ -47,7 +47,12 @@ async function search(options = {}) {
       }
     ])
   })
-  return json;
+
+  return {
+    provider: 'inda',
+    type: 'videos',
+    ...json
+  };
 }
 
 

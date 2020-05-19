@@ -34,7 +34,11 @@ async function search(term, page = 1) {
   })
   json.previousPage = (json.previousPage !== json.currentPage) ? json.previousPage : null;
   json.nextPage = (json.nextPage !== json.currentPage) ? json.nextPage : null;
-  return json;
+  return {
+    provider: 'videa',
+    type: 'videos',
+    ...json
+  };
 }
 
 async function getVideoInfo(videoUrl) {
