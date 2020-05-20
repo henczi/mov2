@@ -13,8 +13,9 @@ const x = xray({
   }
 })
 
-async function search(term, page = 1) {
-  const url = `https://videa.hu/video_kereses/${encodeURIComponent(term)}?page=${encodeURIComponent(page)}`;
+async function search({search, page = 1, category = 0}) {
+  const params = `sort=0&interval=0&category=${encodeURIComponent(category)}&usergroup=0`;
+  const url = `https://videa.hu/video_kereses/${encodeURIComponent(search)}?${params}&page=${encodeURIComponent(page)}`;
   const json = await x(url, {
     totalCount: '.search-keyword > span | splitSpaceFirst',
     currentPage: '.pagination.bottom li.active > a@href | parsePageNumber',
