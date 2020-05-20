@@ -5,7 +5,7 @@
   export let headerText = "";
   export let headerImage = "";
 
-  export let shelf;
+  export let manager;
 
   let element;
   function loadMore() {
@@ -16,7 +16,7 @@
       )
       .pop()
       .focus(); // HACK
-    shelf.page($shelf.nextPage);
+    manager.page($manager.nextPage);
   }
 </script>
 
@@ -56,28 +56,28 @@
   {#if headerText}
     <div class="shelf-header text-white">{headerText}</div>
   {:else}
-    <img height="32" src={headerImage} alt="header title {headerImage}">
+    <img height="32" src={headerImage} alt="header title {headerImage}" />
   {/if}
   <div class="shelf-content flex">
-    {#if $shelf.list && $shelf.list.length}
-      {#each $shelf.list as item}
+    {#if $manager.list && $manager.list.length}
+      {#each $manager.list as item}
         <div class="card-container flex-no-shrink">
           {#if item != $selected}
             <Card {item} on:select={() => selected.set(item)} />
           {/if}
         </div>
       {/each}
-      {#if $shelf.hasMore && !$shelf.loading}
+      {#if $manager.hasMore && !$manager.loading}
         <div class="has-more-container flex">
           <CircleButton big on:click={loadMore}>
             <i class="fas fa-3x fa-chevron-right" />
           </CircleButton>
         </div>
       {/if}
-    {:else if !$shelf.loading}
+    {:else if !$manager.loading}
       <div class="no-content self-center text-mid-grey">No content :(</div>
     {/if}
-    {#if $shelf.loading}
+    {#if $manager.loading}
       <div class="loading self-center text-light fa-5x">
         <i class="fas fa-circle-notch fa-spin" />
       </div>

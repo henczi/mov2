@@ -1,11 +1,11 @@
-import { createShelf } from "../../../components/tv/shelf-store.js";
+import { createSearchManager } from "../../../components/tv/search-store.js";
 
 let inited = false;
 
-const shelf = createShelf("/api/videa/search", false);
+const manager = createSearchManager("/api/videa/search", false);
 
 function search(p) {
-  shelf.search(p);
+  manager.search(p);
 }
 
 
@@ -14,7 +14,7 @@ function init() {
 }
 
 export {
-  shelf as manager,
+  manager,
   search,
   init,
 }

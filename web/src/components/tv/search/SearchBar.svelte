@@ -13,6 +13,7 @@
   /** @type {{ key: string, name: string, type: string, props: {} }[]}*/
   export let searchOptions = [];
   export let imageSrc = '';
+  export let text = '';
 
   const dispatch = createEventDispatcher();
 
@@ -87,6 +88,8 @@
       </button>
       {#if imageSrc}
         <img class="self-center" height="32" src={imageSrc} alt="search image">
+      {:else if text}
+        <div class="self-center" style="font-size: 2.25rem; font-weight: bold;">{text}</div>
       {/if}
     </div>
     <CircleButton on:click={() => (optionsOpen = !optionsOpen)}>

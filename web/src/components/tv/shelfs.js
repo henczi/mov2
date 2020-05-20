@@ -1,11 +1,11 @@
-import { createShelf } from "./shelf-store.js";
+import { createSearchManager } from "./search-store.js";
 
 let inited = false;
 
 const shelfs = {
-  mock: createShelf("/api/mock/search"),
-  inda: createShelf("/api/inda/search"),
-  videa: createShelf("/api/videa/search"),
+  mock: createSearchManager("/api/mock/search"),
+  inda: createSearchManager("/api/inda/search"),
+  videa: createSearchManager("/api/videa/search"),
 };
 
 function search(params) {

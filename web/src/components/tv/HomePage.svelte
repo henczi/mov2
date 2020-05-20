@@ -4,7 +4,7 @@
   import { searchOptions } from "./search-options.js"
   import { shelfs, search, initShelfs } from "./shelfs.js";
   import SearchBar from "./search/SearchBar.svelte";
-  import Shelf from "./shelf/Shelf.svelte";
+  import VideoShelf from "./shelf/VideoShelf.svelte";
   import DetailCard from "./detail/DetailCard.svelte";
 
   onMount(() => initShelfs());
@@ -25,9 +25,9 @@
 </div>
 
 <div class="shelf-list">
-  <Shelf shelf={shelfs.mock} headerText="Home Server" />
-  <Shelf shelf={shelfs.inda} headerImage="inda.png" />
-  <Shelf shelf={shelfs.videa} headerImage="videa.png" />
+  <VideoShelf manager={shelfs.mock} headerText="Home Server" />
+  <VideoShelf manager={shelfs.inda} headerImage="inda.png" />
+  <VideoShelf manager={shelfs.videa} headerImage="videa.png" />
 </div>
 
 {#if $selected}

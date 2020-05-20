@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 
 const tap = fn => v => (fn(v), v);
 
-function createShelf(searchBase, preserve = true) {
+function createSearchManager(searchBase, preserve = true) {
   let currentUnpagedQuery;
 
 	const { subscribe, update } = writable({
@@ -16,7 +16,7 @@ function createShelf(searchBase, preserve = true) {
   const tapUpdate = fn => update(tap(fn));
 
   function search(params) {
-    tapUpdate(shelf => shelf.list = []);
+    tapUpdate(o => o.list = []);
     const options = params.options || {};
     const optionsQuery = Object.keys(options).map(key => `&${key}=${options[key]}`).join('');
     currentUnpagedQuery = `${searchBase}?search=${params.term}${optionsQuery}`;
@@ -24,21 +24,21 @@ function createShelf(searchBase, preserve = true) {
   }
 
   function page(p) {
-    tapUpdate(shelf => shelf.loading = true);
+    tapUpdate(o => o.loading = true);
     fetch(currentUnpagedQuery + (p != null ? `&page=${p}` : ""))
       .then(x => x.json())
       .then(x => {
-        tapUpdate(shelf => {
-          shelf.totalCount = x.totalCount;
-          shelf.hasMore = x.nextPage && x.nextPage !== x.currentPage;
-          shelf.currentPage = x.currentPage;
-          shelf.previousPage = x.previousPage;
-          shelf.nextPage = x.nextPage;
+        tapUpdate(o => {
+          o.totalCount = x.totalCount;
+          o.hasMore = x.nextPage && x.nextPage !== x.currentPage;
+          o.currentPage = x.currentPage;
+          o.previousPage = x.previousPage;
+          o.nextPage = x.nextPage;
           if (preserve)
-            shelf.list = [...shelf.list, ...x.items];
+            o.list = [...o.list, ...x.items];
           else
-            shelf.list = [...x.items]
-          shelf.loading = false;
+            o.list = [...x.items]
+          o.loading = false;
         });
       });
   }
@@ -50,4 +50,4 @@ function createShelf(searchBase, preserve = true) {
 	};
 }
 
-export { createShelf };
+export { createSearchManager };

@@ -2,12 +2,9 @@
 <script>
   import Card from '../card/VideoCard.svelte';
   import CircleButton from '../../elements/CircleButton.svelte';
-  import { goto } from '@sapper/app';
+  import { createEventDispatcher } from "svelte";
   export let manager;
-
-  function select(item) {
-    goto('/watch?v=' + item.href)
-  }
+  const dispatch = createEventDispatcher();
 </script>
 
 <style>
@@ -44,7 +41,7 @@
     <div class="grid-container">
       {#each $manager.list as item}
         <div class="grid-item-container">
-          <Card {item} on:select={() => select(item)} />
+          <Card {item} on:select={() => dispatch('select', item)} />
         </div>
       {/each}
       <div class="grid-item-container"></div>
