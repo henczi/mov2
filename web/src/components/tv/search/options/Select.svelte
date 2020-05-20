@@ -12,7 +12,7 @@
     return o.key === value;
   }
 
-  select(0);
+  if (value === undefined) select(0);
 </script>
 
 <style>
