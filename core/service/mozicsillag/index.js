@@ -64,6 +64,7 @@ async function getLinks(url) {
     json = await x(linksPageUrl, {
       title: 'h1 | trim',
       description: '.content > p | trim',
+      image: '.content img.cover_image@src',
       episodes: x('.accordion-episodes', [
         {
           name: '.textHolder | trim',
@@ -72,7 +73,7 @@ async function getLinks(url) {
               name: '.link_share | trim',
               id: 'a[target]@href',
               uploadTime: '.uploadedLink_movie | trim',
-              lang: '.link_flag@alt',
+              lang: '.link_flag img@alt',
               uploader: '.uploader_movie | trim',
               views: '.link_views | trim',
             }
@@ -85,12 +86,13 @@ async function getLinks(url) {
     json = await x(linksPageUrl, {
       title: 'h1 | trim',
       description: '.content > p | trim',
+      image: '.content img.cover_image@src',
       links: x('.links_holder .panel', [
         {
           name: '.link_share | trim',
           id: 'a[target]@href',
           uploadTime: '.uploadedLink_movie | trim',
-          lang: '.link_flag@alt',
+          lang: '.link_flag img@alt',
           uploader: '.uploader_movie | trim',
           views: '.link_views | trim',
         }
