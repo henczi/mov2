@@ -60,11 +60,13 @@ async function getVideoInfo(videoUrl) {
   const pageHTML = await fetch(videoUrl, { headers: requestHeaders }).then(x => x.text());
   const videoId = (pageHTML.match(/player\/video\/(.{10})\"/) || '00')[1];
   const response = await fetch(getVideoInfoBaseUrl + videoId, { headers: requestHeaders }).then(x => x.json())
-  
+
+  const srcs = Array.isArray(response.data.video_files) ? response.data.video_files : Object.values(response.data.video_files);
+
   const sources = ['360', '720', '1080']
     .filter(x => response.data.filesh[x])
     .map(x => ({
-      src: response.data.video_files.filter(o => o.includes(`.${x}.mp4`))[0] + '&token=' + response.data.filesh[x],
+      src: srcs.filter(o => o.includes(`.${x}.mp4`))[0] + '&token=' + response.data.filesh[x],
       mime: 'video/mp4',
       resolution: `${x}p`,
     }));
