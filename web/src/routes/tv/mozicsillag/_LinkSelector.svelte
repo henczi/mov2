@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { createEventDispatcher } from "svelte";
-  import { fade } from "svelte/transition";
+  import { fade, scale } from "svelte/transition";
   import { goto } from "@sapper/app";
   import CircleButton from "../../../components/elements/CircleButton.svelte";
   import { focusable } from "../../../helpers/focusable";
@@ -67,14 +67,14 @@
   }
 </style>
 
-<div class="overlay" bind:this={rootEl}>
+<div class="overlay" bind:this={rootEl} transition:fade>
   {#if itemDetail}
-    <div class="link-selector bg-dark text-lighter" translate:fade>
+    <div class="link-selector bg-dark text-lighter" transition:scale>
       <div class="button" use:focusable={() => dispatch('close')}>Close</div>
       <div class="flex">
         {#if itemDetail.image}
-          <div style="padding: 1rem;">
-            <img style="height: 250px;" src={itemDetail.image} alt="poster" />
+          <div style="margin: 1rem; width: 200px; height: 300px;">
+            <img style="width: 100%;" src={itemDetail.image} alt="poster" />
           </div>
         {/if}
         <div>
