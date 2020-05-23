@@ -17,8 +17,9 @@
 
   let rootEl;
 
-  async function select(id) {
-    goto("/player?src=" + id);
+  async function select(item) {
+    const link = await fetch("/api/mozicsillag/get-link?l=" + item.href).then(x => x.json())
+    goto("/watch?v=" + link.redirect);
   }
 
   onMount(async () => {
@@ -108,7 +109,7 @@
           {#each links as link}
             <div
               class="flex justify-between link"
-              use:focusable={() => select(link.id)}>
+              use:focusable={() => select(link)}>
               <div>{link.name}</div>
               <div>{link.lang}</div>
               <div>{link.uploadTime}</div>

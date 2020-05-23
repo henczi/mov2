@@ -1,14 +1,6 @@
 <script context="module">
   export async function preload(page, session) {
-    const p = page.query.v.includes("indavideo.hu")
-      ? "inda"
-      : page.query.v.includes("videa.hu")
-      ? "videa"
-      : undefined;
-    if (!["inda", "videa"].includes(p)) {
-      this.error(404, "Wrong provider");
-    }
-    return { p, v: page.query.v };
+    return { v: page.query.v };
   }
 </script>
 
@@ -16,17 +8,16 @@
   import { onMount } from "svelte";
   import WindowTitle from "../../components/elements/WindowTitle.svelte";
   import Plyr from "../../components/player/Plyr.svelte";
-  export let p;
   export let v;
   let config;
   let error;
   let title = "Loading video";
 
   onMount(async () => {
-    const videoInfo = await fetch(`/api/${p}/get_video_info?v=${v}`).then(x =>
+    const videoInfo = await fetch(`/api/url-resolver/resolve?l=${v}`).then(x =>
       x.json()
     );
-    title = videoInfo.title;
+    title = videoInfo && videoInfo.title;
     config = videoInfo;
     if (!config) {
       error = "No available source";

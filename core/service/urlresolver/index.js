@@ -13,6 +13,7 @@ async function doResolve(url) {
       return await resolver.resolve(url);
     }
   }
+  return null;
 }
 
 module.exports = {
