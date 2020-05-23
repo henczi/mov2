@@ -51,6 +51,7 @@ async function search(options = {}) {
 }
 
 async function getLinks(url) {
+  // TODO: validation
   const isSorozat = url.includes('/sorozat/');
   const page = await fetch(url).then(x => x.text());
   const linksPageUrl = page.match(/href\=\"(https?:\/\/filmbirodalmak.com.*?)"/m)[1];
@@ -102,7 +103,14 @@ async function getLinks(url) {
   return json;
 }
 
+async function getLink(url) {
+  url = url.replace(/^http:/, 'https:');
+  // TODO: validation
+  return { redirect: (await fetch(url, { redirect: 'manual' })).headers.get('Location') };
+}
+
 module.exports = {
   search,
   getLinks,
+  getLink,
 }

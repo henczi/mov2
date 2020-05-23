@@ -9,4 +9,8 @@ api.get('/get-links', async function (req, res, next) {
   res.json(await service.getLinks(req.query.l))
 })
 
+api.get('/get-link', async function (req, res, next) {
+  res.json(await service.getLink(req.query.l))
+})
+
 module.exports = api;
