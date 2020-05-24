@@ -5,9 +5,11 @@
   import { createEventDispatcher } from "svelte";
   import CircleButton from "../../elements/CircleButton.svelte";
   import Select from "./options/Select.svelte";
+  import NumberInput from "./options/NumberInput.svelte";
 
   let mapTypeToComponent = {
-    select: Select
+    select: Select,
+    number: NumberInput,
   };
 
   /** @type {{ key: string, name: string, type: string, props: {} }[]}*/

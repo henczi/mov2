@@ -17,16 +17,18 @@ const x = xray({
 
 async function search(options = {}) {
   const year = (new Date()).getFullYear();
-  let orderBy = 'legfrissebb';
+  let sort = 'legfrissebb';
+  if (options.sort && ['legfrissebb', 'legnezettebb', 'legjobbra-ertekelt', 'legvelemenyezettebb'].includes(options.sort))
+    sort = options.sort;
 
   let params = {};
   params['search_type'] = encodeURIComponent(options.type || 0);
   if (options.search) params['search_term'] = encodeURIComponent(options.search);
-  if (options.yearFrom && options.yearFrom > 1900 && options.yearFrom < year) params['search_year_from'] = options.yearFrom;
-  if (options.yearTo && options.yearTo > 1900 && options.yearTo < year) params['search_year_to'] = options.yearTo;
+  if ((options.yearFrom = +options.yearFrom) && options.yearFrom >= 1900 && options.yearFrom <= year) params['search_year_from'] = options.yearFrom;
+  if ((options.yearTo = +options.yearTo) && options.yearTo >= 1900 && options.yearTo <= year) params['search_year_to'] = options.yearTo;
   const paramsString = Object.keys(params).map(x => `${x}=${params[x]}`).join('&');
 
-  const url = `${baseUrl}/kereses/${orderBy}/${Buffer.from(paramsString).toString('base64')}`;
+  const url = `${baseUrl}/kereses/${sort}/${Buffer.from(paramsString).toString('base64')}${ options.page ? '?page=' + options.page : ''}`;
   const json = await x(url, {
     currentPage: '.pagination .current | trim',
     previousPage: '.pagination .arrow:first-child a@href | parsePageNumber',
