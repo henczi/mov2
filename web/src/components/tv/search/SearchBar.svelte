@@ -85,7 +85,7 @@
         placeholder="Search"
         on:keydown={keydown} />
 
-      <button use:focusable class="text-mid-grey" on:click={doSearch}>
+      <button use:focusable={doSearch} class="text-mid-grey">
         <i class="fas fa-search" />
       </button>
       {#if imageSrc}

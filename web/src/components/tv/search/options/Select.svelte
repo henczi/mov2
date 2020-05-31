@@ -50,10 +50,9 @@
   <div class="options flex">
     {#each options as opt, index}
       <button
-        use:focusable
+        use:focusable={() => select(index)}
         class="option bg-darker text-lighter"
-        class:selected={isSelected(opt, value)}
-        on:click={() => select(index)}>
+        class:selected={isSelected(opt, value)}>
         {opt.label}
       </button>
     {/each}

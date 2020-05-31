@@ -75,7 +75,6 @@
 
 <div
   use:focusable={select}
-  on:click={select}
   class="card fley text-lighter"
   in:receive|local={{ key: item.href }}
   out:send|local={{ key: item.href }}>

@@ -11,6 +11,7 @@
 
   let itemDetail;
 
+  let selectedEpisode;
   let selectedEpisodeLinks;
 
   $: links = itemDetail && itemDetail.links || selectedEpisodeLinks;
@@ -19,7 +20,10 @@
 
   async function select(item) {
     const link = await fetch("/api/mozicsillag/get-link?l=" + item.href).then(x => x.json())
-    goto("/watch?v=" + link.redirect);
+    if (link.redirect)
+      goto("/watch?v=" + link.redirect);
+    else
+      alert('Can not resolve this link :(');
   }
 
   onMount(async () => {
@@ -74,7 +78,7 @@
       <div class="button" use:focusable={() => dispatch('close')}>Close</div>
       <div class="flex">
         {#if itemDetail.image}
-          <div style="margin: 1rem; width: 200px; height: 300px;">
+          <div style="margin: 1rem; width: 200px; height: 300px;" class="flex-no-shrink">
             <img style="width: 100%;" src={itemDetail.image} alt="poster" />
           </div>
         {/if}
@@ -90,7 +94,7 @@
           {#each itemDetail.episodes as episode}
             <div
               class="episode"
-              use:focusable={() => (selectedEpisodeLinks = episode.links)}>
+              use:focusable={() => (selectedEpisode = episode, selectedEpisodeLinks = episode.links)}>
               {episode.name}
             </div>
           {/each}
@@ -103,6 +107,7 @@
             use:focusable={() => (selectedEpisodeLinks = undefined)}>
             &lt;- Back
           </div>
+          <h2>{selectedEpisode.name}</h2>
         {/if}
         <h3>Links</h3>
         <div class="links">

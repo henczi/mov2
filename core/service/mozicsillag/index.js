@@ -74,7 +74,7 @@ async function getLinks(url) {
           links: x('.panel', [
             {
               name: '.link_share | trim',
-              id: 'a[target]@href',
+              href: 'a[target]@href',
               uploadTime: '.uploadedLink_movie | trim',
               lang: '.link_flag img@alt',
               uploader: '.uploader_movie | trim',

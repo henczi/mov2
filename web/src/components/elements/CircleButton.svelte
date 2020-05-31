@@ -1,7 +1,9 @@
 <script>
   import { focusable } from "../../helpers/focusable";
+  import { createEventDispatcher } from "svelte";
   export let big = false;
   export let disabled = false;
+  const dispatch = createEventDispatcher();
 </script>
 
 <style>
@@ -31,6 +33,6 @@
   }
 </style>
 
-<button use:focusable on:click class="button bg-darker text-lighter" class:big {disabled}>
+<button use:focusable={() => dispatch('click')} class="button bg-darker text-lighter" class:big {disabled}>
   <slot />
 </button>
