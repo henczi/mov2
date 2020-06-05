@@ -3,7 +3,7 @@ import { createSearchManager } from "./search-store.js";
 let inited = false;
 
 const shelfs = {
-  mock: createSearchManager("/api/mock/search"),
+  // mock: createSearchManager("/api/mock/search"),
   inda: createSearchManager("/api/inda/search"),
   videa: createSearchManager("/api/videa/search"),
 };

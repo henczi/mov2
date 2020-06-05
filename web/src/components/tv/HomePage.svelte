@@ -25,7 +25,7 @@
 </div>
 
 <div class="shelf-list">
-  <VideoShelf manager={shelfs.mock} headerText="Home Server" />
+  <!-- <VideoShelf manager={shelfs.mock} headerText="Home Server" /> -->
   <VideoShelf manager={shelfs.inda} headerImage="inda.png" />
   <VideoShelf manager={shelfs.videa} headerImage="videa.png" />
 </div>
