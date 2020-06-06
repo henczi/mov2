@@ -20,7 +20,7 @@ async function search(options = {}) {
   if (options.search) url += `&search=${encodeURIComponent(options.search)}`;
   if (options.page) url += `&p_uni=${encodeURIComponent(options.page)}`;
   if (options.sort) url += `&sort_mode=${encodeURIComponent(options.sort)}`;
-  if (options.category) url += `&channel_constraint=${encodeURIComponent(options.channel)}`;
+  if (options.category) url += `&channel_constraint=${encodeURIComponent(options.category)}`;
   if (options.channel) url += `&user_constraint=${encodeURIComponent(options.channel)}`;
   else if (options.user) url += `&user_constraint=${encodeURIComponent(options.user)}`;
   if (options.age) url += `&age=${encodeURIComponent(options.age)}`;

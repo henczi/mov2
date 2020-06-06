@@ -26,7 +26,7 @@ export let searchOptions = [
     }
   },
   {
-    key: 'sort_mode',
+    key: 'sort',
     name: 'Rendezés',
     type: 'select',
     props: {
@@ -41,7 +41,7 @@ export let searchOptions = [
     }
   },
   {
-    key: 'channel_constraint',
+    key: 'category',
     name: 'Rendezés',
     type: 'select',
     props: {
