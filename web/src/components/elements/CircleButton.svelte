@@ -31,6 +31,17 @@
     background-color: var(--color-lighter);
     color: var(--color-darker);
   }
+
+  @media(max-width: 400px) {
+    .button {
+      width: 3rem;
+      height: 3rem;
+    }
+    .button.big {
+      width: 4rem;
+      height: 4rem;
+    }
+  }
 </style>
 
 <button use:focusable={() => dispatch('click')} class="button bg-darker text-lighter" class:big {disabled}>

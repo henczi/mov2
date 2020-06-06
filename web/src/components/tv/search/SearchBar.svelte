@@ -46,6 +46,7 @@
   }
   .search-container .search input {
     font-size: 3rem;
+    width: 100%;
     font-weight: bold;
     background-color: transparent;
     color: var(--color-lighter);
@@ -68,30 +69,52 @@
 
   .options {
     margin: 1rem 0;
+    overflow: hidden;
   }
 
   .search-option-container {
     margin-bottom: 0.5rem;
+  }
+
+  .search-brand-image {
+    height: 32px;
+  }
+  .search-brand-text {
+    font-size: 2.25rem;
+    font-weight: bold;
+  }
+  @media(max-width: 400px) {
+    .search-brand {
+      display: none;
+    }
+    .search-container .search input {
+      font-size: 1.5rem;
+    }
+    .search-container .search button {
+      font-size: 1.5rem;
+    }
   }
 </style>
 
 <div class="search-bar text-lighter">
   <div class="search-container flex justify-between">
     <div class="search flex">
-      <input
-        use:focusable
-        bind:value={term}
-        type="text"
-        placeholder="Search"
-        on:keydown={keydown} />
+      <div class="flex">
+        <input
+          use:focusable
+          bind:value={term}
+          type="text"
+          placeholder="Search"
+          on:keydown={keydown} />
 
-      <button use:focusable={doSearch} class="text-mid-grey">
-        <i class="fas fa-search" />
-      </button>
+        <button use:focusable={doSearch} class="search-btn text-mid-grey">
+          <i class="fas fa-search" />
+        </button>
+      </div>
       {#if imageSrc}
-        <img class="self-center" height="32" src={imageSrc} alt="search image">
+        <img class="search-brand search-brand-image self-center" src={imageSrc} alt="search image">
       {:else if text}
-        <div class="self-center" style="font-size: 2.25rem; font-weight: bold;">{text}</div>
+        <div class="search-brand search-brand-text self-center">{text}</div>
       {/if}
     </div>
     <CircleButton on:click={() => (optionsOpen = !optionsOpen)}>

@@ -91,7 +91,7 @@
     <Link href="/watch?v={item.href}">
       <div class="title">{item.title}</div>
     </Link>
-    {#if false && item.description}
+    {#if item.description}
       <p class="description">{item.description}</p>
     {/if}
   </div>

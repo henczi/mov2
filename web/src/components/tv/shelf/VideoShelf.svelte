@@ -1,11 +1,15 @@
 <script>
+  import { goto } from '@sapper/app';
   import Card from "../card/VideoCard.svelte";
-  import { selected } from "../selected-store.js";
   import CircleButton from "../../elements/CircleButton.svelte";
   export let headerText = "";
   export let headerImage = "";
 
   export let manager;
+
+  function select(item) {
+    goto(`/watch?v=${item.href}`)
+  }
 
   let element;
   function loadMore() {
@@ -62,9 +66,7 @@
     {#if $manager.list && $manager.list.length}
       {#each $manager.list as item}
         <div class="card-container flex-no-shrink">
-          {#if item != $selected}
-            <Card {item} on:select={() => selected.set(item)} />
-          {/if}
+          <Card {item} on:select={() => select(item)} />
         </div>
       {/each}
       {#if $manager.hasMore && !$manager.loading}

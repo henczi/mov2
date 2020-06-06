@@ -1,11 +1,9 @@
 <script>
   import { onMount, onDestroy } from "svelte";
-  import { selected } from "./selected-store.js"
   import { searchOptions } from "./search-options.js"
   import { shelfs, search, initShelfs } from "./shelfs.js";
   import SearchBar from "./search/SearchBar.svelte";
   import VideoShelf from "./shelf/VideoShelf.svelte";
-  import DetailCard from "./detail/DetailCard.svelte";
 
   onMount(() => initShelfs());
   onDestroy(() => console.log("onDestroy"));
@@ -29,7 +27,3 @@
   <VideoShelf manager={shelfs.inda} headerImage="inda.png" />
   <VideoShelf manager={shelfs.videa} headerImage="videa.png" />
 </div>
-
-{#if $selected}
-  <DetailCard item={$selected}></DetailCard>
-{/if}

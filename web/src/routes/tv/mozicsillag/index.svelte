@@ -33,7 +33,7 @@
     <SearchBar
       {searchOptions}
       on:search={s => search(s.detail)}
-      text="Mozi &#9733; Csillag" />
+      text="Mozi&nbsp;&#9733;&nbsp;Csillag" />
   </div>
 
   <div class="content-container flex-grow">
