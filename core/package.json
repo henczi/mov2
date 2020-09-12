@@ -12,7 +12,7 @@
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "fast-xml-parser": "^3.16.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "x-ray": "^2.3.4"
   },
   "devDependencies": {
