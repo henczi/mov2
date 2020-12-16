@@ -6,7 +6,6 @@
   import VideoShelf from "./shelf/VideoShelf.svelte";
 
   onMount(() => initShelfs());
-  onDestroy(() => console.log("onDestroy"));
 </script>
 
 <style>
