@@ -4,7 +4,7 @@ export function focusable(/** @type {HTMLElement} */ node, /** @type {Function} 
 
   const handleClick = (/** @type {MouseEvent} */ event) => clickHandler(event);
   const handleEnter = (/** @type {CustomEvent} */ event) => (clickHandler(event.detail), event.preventDefault());
-  const scrollIntoView = (/** @type {CustomEvent} */ event) => node.scrollIntoViewIfNeeded ? node.scrollIntoViewIfNeeded(false) : node.scrollIntoView(); // TODO
+  const scrollIntoView = (/** @type {CustomEvent} */ event) => node.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
   node.addEventListener('click', handleClick);
   node.addEventListener('sn:enter-down', handleEnter);

@@ -1,9 +1,8 @@
 <script>
-  import { onMount } from "svelte";
+  import { onMount, tick } from "svelte";
   import { createEventDispatcher } from "svelte";
   import { fade, scale } from "svelte/transition";
   import { goto } from "@sapper/app";
-  import CircleButton from "../../../components/elements/CircleButton.svelte";
   import { focusable } from "../../../helpers/focusable";
   let dispatch = createEventDispatcher();
 
@@ -14,56 +13,76 @@
   let selectedEpisode;
   let selectedEpisodeLinks;
 
-  $: links = itemDetail && itemDetail.links || selectedEpisodeLinks;
+  $: links = (itemDetail && itemDetail.links) || selectedEpisodeLinks;
 
   let rootEl;
 
-  async function select(item) {
-    const link = await fetch("/api/mozicsillag/get-link?l=" + item.href).then(x => x.json())
-    if (link.redirect)
-      goto("/watch?v=" + link.redirect);
-    else
-      alert('Can not resolve this link :(');
+  async function focusFirstRow() {
+    await tick();
+    const el = rootEl.querySelector(".link-row.focusable");
+    if (el) { el.focus() }
+  }
+
+  function selectEpisode(episode) {
+    selectedEpisode = episode;
+    selectedEpisodeLinks = episode.links
+    focusFirstRow();
+  }
+
+  function back() {
+    selectedEpisodeLinks = undefined;
+    focusFirstRow();
+  }
+
+  async function selectLink(item) {
+    const link = await fetch(
+      "/api/mozicsillag/get-link?l=" + item.href
+    ).then((x) => x.json());
+    if (link.redirect) goto("/watch?v=" + link.redirect);
+    else alert("Can not resolve this link :(");
   }
 
   onMount(async () => {
-    itemDetail = await fetch("/api/mozicsillag/get-links?l=" + item.href).then(
-      x => x.json()
-    );
-    setTimeout(() => rootEl.querySelector(".focusable").focus());
+    itemDetail = await fetch(
+      "/api/mozicsillag/get-links?l=" + item.href
+    ).then((x) => x.json());
+    focusFirstRow();
   });
 </script>
 
 <style>
-  .link-selector {
-    padding: 2.5rem;
-    overflow-y: scroll;
+  .container {
+    display: flex;
     width: 80%;
     height: 80%;
   }
-
-  .button {
+  .container .buttons {
+    display: flex;
+    flex-direction: column;
+  }
+  .container .buttons .button {
     padding: 0.5rem;
     font-weight: bold;
     text-align: center;
-    border: 1px solid var(--color-white);
+    border-right: 1px solid var(--color-white);
   }
-
-  .links-back-button {
-    margin: 1rem 0;
+  .container .buttons .button:last-child {
+    flex-grow: 1;
   }
-
+  .link-selector {
+    padding: 2.5rem;
+    overflow-y: scroll;
+    flex-grow: 1;
+  }
   .link,
   .episode {
     padding: 1rem 0.5rem;
     border-bottom: 1px solid var(--color-mid-grey);
   }
-
-  .link>div,
-  .episode>div {
+  .link > div,
+  .episode > div {
     flex: 1 1 10rem;
   }
-
   .link:focus,
   .episode:focus,
   .button:focus {
@@ -72,58 +91,72 @@
   }
 </style>
 
-<div class="overlay" bind:this={rootEl} transition:fade>
+<div
+  class="overlay"
+  bind:this={rootEl}
+  transition:fade
+  on:click={(e) => e.target === e.currentTarget && dispatch('close')}>
   {#if itemDetail}
-    <div class="link-selector bg-dark text-lighter" transition:scale>
-      <div class="button" use:focusable={() => dispatch('close')}>Close</div>
-      <div class="flex">
-        {#if itemDetail.image}
-          <div style="margin: 1rem; width: 200px; height: 300px;" class="flex-no-shrink">
-            <img style="width: 100%;" src={itemDetail.image} alt="poster" />
-          </div>
-        {/if}
-        <div>
-          <h2>{itemDetail.title}</h2>
-          <p>{itemDetail.description}</p>
+    <div class="container bg-dark text-lighter">
+      <div class="buttons">
+        <div class="button" use:focusable={() => dispatch('close')}>
+          <i class="fas fa-fw fa-times" />
         </div>
-      </div>
-      <hr />
-      {#if itemDetail.episodes && !selectedEpisodeLinks}
-        <h3>Episodes</h3>
-        <div class="episodes">
-          {#each itemDetail.episodes as episode}
-            <div
-              class="episode"
-              use:focusable={() => (selectedEpisode = episode, selectedEpisodeLinks = episode.links)}>
-              {episode.name}
-            </div>
-          {/each}
-        </div>
-      {/if}
-      {#if links}
-        {#if itemDetail.episodes}
+        {#if links && itemDetail && itemDetail.episodes}
           <div
-            class="links-back-button button"
-            use:focusable={() => (selectedEpisodeLinks = undefined)}>
-            &lt;- Back
+            class="button"
+            use:focusable={() => back()}>
+            <i class="fas fa-fw fa-chevron-left" />
           </div>
-          <h2>{selectedEpisode.name}</h2>
         {/if}
-        <h3>Links</h3>
-        <div class="links">
-          {#each links as link}
+      </div>
+      <div class="link-selector" transition:scale>
+        <div class="flex">
+          {#if itemDetail.image}
             <div
-              class="flex justify-between link"
-              use:focusable={() => select(link)}>
-              <div>{link.name}</div>
-              <div>{link.lang}</div>
-              <div>{link.uploadTime}</div>
-              <div>{link.views}</div>
-              <div>{link.uploader}</div>
+              style="margin: 1rem; width: 200px; height: 300px;"
+              class="flex-no-shrink">
+              <img style="width: 100%;" src={itemDetail.image} alt="poster" />
             </div>
-          {/each}
+          {/if}
+          <div>
+            <h2>{itemDetail.title}</h2>
+            <p>{itemDetail.description}</p>
+          </div>
         </div>
-      {/if}
+        <hr />
+        {#if itemDetail.episodes && !selectedEpisodeLinks}
+          <h3>Episodes</h3>
+          <div class="episodes">
+            {#each itemDetail.episodes as episode}
+              <div
+                class="episode link-row"
+                use:focusable={() => selectEpisode(episode)}>
+                {episode.name}
+              </div>
+            {/each}
+          </div>
+        {/if}
+        {#if links}
+          {#if itemDetail.episodes}
+            <h2>{selectedEpisode.name}</h2>
+          {/if}
+          <h3>Links</h3>
+          <div class="links">
+            {#each links as link}
+              <div
+                class="flex justify-between link link-row"
+                use:focusable={() => selectLink(link)}>
+                <div>{link.name}</div>
+                <div>{link.lang}</div>
+                <div>{link.uploadTime}</div>
+                <div>{link.views}</div>
+                <div>{link.uploader}</div>
+              </div>
+            {/each}
+          </div>
+        {/if}
+      </div>
     </div>
   {:else}
     <div class="loading self-center text-light fa-5x">

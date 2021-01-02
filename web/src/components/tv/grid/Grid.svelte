@@ -53,7 +53,7 @@
     </div>
 
     <div class="paginator flex justify-center">
-      <CircleButton disabled={!$manager.previousPage} on:click={() => manager.page($manager.nextPage)}>
+      <CircleButton disabled={!$manager.previousPage} on:click={() => manager.page($manager.previousPage)}>
         <i class="fas fa-2x fa-chevron-left" />
       </CircleButton>
       <div class="current-page text-light self-center">
