@@ -3,9 +3,11 @@
   import { createEventDispatcher } from "svelte";
   import { fade, scale } from "svelte/transition";
   import { goto } from "@sapper/app";
-  import { focusable } from "../../../helpers/focusable";
+  import { focusable } from "../../helpers/focusable";
+  import { snOverlay } from "../../routes/tv/_spatial-navigation";
   let dispatch = createEventDispatcher();
 
+  export let linkManager;
   export let item;
 
   let itemDetail;
@@ -35,22 +37,23 @@
   }
 
   async function selectLink(item) {
-    const link = await fetch(
-      "/api/mozicsillag/get-link?l=" + item.href
-    ).then((x) => x.json());
+    const link = await linkManager.getLink(item.href);
     if (link.redirect) goto("/watch?v=" + link.redirect);
     else alert("Can not resolve this link :(");
   }
 
   onMount(async () => {
-    itemDetail = await fetch(
-      "/api/mozicsillag/get-links?l=" + item.href
-    ).then((x) => x.json());
+    itemDetail = await linkManager.getLinks(item.href);
     focusFirstRow();
   });
+
+  onMount(snOverlay)
 </script>
 
 <style>
+  .overlay {
+    z-index: 99;
+  }
   .container {
     display: flex;
     width: 80%;

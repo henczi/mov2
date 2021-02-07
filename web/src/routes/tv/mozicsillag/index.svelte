@@ -1,12 +1,14 @@
 <script>
   import { onMount } from "svelte";
-  import LinkSelector from "./_LinkSelector.svelte";
+  import LinkSelector from "../../../components/tv/LinkSelector.svelte";
   import WindowTitle from "../../../components/elements/WindowTitle.svelte";
   import SearchBar from "../../../components/tv/search/SearchBar.svelte";
   import Grid from "../../../components/tv/grid/Grid.svelte";
   import { searchOptions } from "./_search-options.js";
   import { manager, search, init } from "./_search-manager.js";
+  import { createLinkManager } from "../../../components/tv/link-manager.js";
 
+  const linkManager = createLinkManager("/api/mozicsillag/get-links?l=", "/api/mozicsillag/get-link?l=")
   let selected;
 
   onMount(() => init());
@@ -42,5 +44,5 @@
 </div>
 
 {#if selected}
-  <LinkSelector item={selected} on:close={() => (selected = undefined)} />
+  <LinkSelector {linkManager} item={selected} on:close={() => (selected = undefined)} />
 {/if}

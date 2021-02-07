@@ -1,11 +1,14 @@
 <script>
   import { onMount, onDestroy } from "svelte";
   import { searchOptions } from "./search-options.js"
-  import { shelfs, search, initShelfs } from "./shelfs.js";
+  import { createLinkManager } from "./link-manager.js"
+  import { shelves, search, initShelves } from "./shelves.js";
   import SearchBar from "./search/SearchBar.svelte";
   import VideoShelf from "./shelf/VideoShelf.svelte";
 
-  onMount(() => initShelfs());
+  const mozicsillagLinkManager = createLinkManager("/api/mozicsillag/get-links?l=", "/api/mozicsillag/get-link?l=")
+
+  onMount(() => initShelves());
 </script>
 
 <style>
@@ -22,7 +25,8 @@
 </div>
 
 <div class="shelf-list">
-  <!-- <VideoShelf manager={shelfs.mock} headerText="Home Server" /> -->
-  <VideoShelf manager={shelfs.inda} headerImage="inda.png" />
-  <VideoShelf manager={shelfs.videa} headerImage="videa.png" />
+  <!-- <VideoShelf manager={shelves.mock} headerText="Home Server" /> -->
+  <VideoShelf manager={shelves.mozicsilag} linkManager={mozicsillagLinkManager} headerText="MoziCsillag"/>
+  <VideoShelf manager={shelves.inda} headerImage="inda.png" />
+  <VideoShelf manager={shelves.videa} headerImage="videa.png" />
 </div>

@@ -2,13 +2,19 @@
   import { goto } from '@sapper/app';
   import Card from "../card/VideoCard.svelte";
   import CircleButton from "../../elements/CircleButton.svelte";
+  import LinkSelector from '../LinkSelector.svelte';
   export let headerText = "";
   export let headerImage = "";
 
   export let manager;
+  export let linkManager;
+
+  let selected;
 
   function select(item) {
-    goto(`/watch?v=${item.href}`)
+    linkManager
+      ? selected = item
+      : goto(`/watch?v=${item.href}`)
   }
 
   let element;
@@ -86,3 +92,9 @@
     {/if}
   </div>
 </div>
+
+{#if linkManager}
+  {#if selected}
+    <LinkSelector {linkManager} item={selected} on:close={() => (selected = undefined)} />
+  {/if}
+{/if}

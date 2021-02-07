@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "sapper dev",
-    "build": "sapper build --legacy",
+    "build": "sapper build",
     "export": "sapper export --legacy",
     "start": "node __sapper__/build",
     "test": "run-p --race dev cy:run"

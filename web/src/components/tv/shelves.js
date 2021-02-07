@@ -2,22 +2,23 @@ import { createSearchManager } from "./search-store.js";
 
 let inited = false;
 
-const shelfs = {
+const shelves = {
   // mock: createSearchManager("/api/mock/search"),
   inda: createSearchManager("/api/inda/search"),
   videa: createSearchManager("/api/videa/search"),
+  mozicsilag: createSearchManager("/api/mozicsillag/search"),
 };
 
 function search(params) {
-  Object.keys(shelfs).forEach(x => shelfs[x].search(params));
+  Object.keys(shelves).forEach(x => shelves[x].search(params));
 }
 
-function initShelfs() {
+function initShelves() {
   inited || (inited = true) && search({ term: '' });
 }
 
 export {
-  shelfs,
+  shelves,
   search,
-  initShelfs,
+  initShelves,
 }
