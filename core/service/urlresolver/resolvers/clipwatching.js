@@ -12,10 +12,10 @@ module.exports = class extends require('../resolver.js') {
 
     const sourcesRaw = html.match(/sources: *\[(.*?)\]/)[1];
     const sources = sourcesRaw.split('}').map(x => {
-      const matched = x.match(/src: *"(http.*?)" *, *type: *"(.*?)"/);
+      const matched = x.match(/file: *"(http.*?)" *(, *label: *"(.*?)")?/);
       if (!matched) return null;
-      const [_, src, mime] = matched;
-      return { src, mime }
+      const [_, src, _2, resolution] = matched;
+      return { src, resolution }
     }).filter(x => !!x);
 
     return {
