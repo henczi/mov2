@@ -47,4 +47,5 @@
   onMount(() => createPlyrVideo());
 </script>
 
+<!-- svelte-ignore a11y-media-has-caption -->
 <video controls autoplay bind:this={videoEl} />

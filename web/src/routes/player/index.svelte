@@ -37,6 +37,7 @@
       allowfullscreen
       frameborder="0" />
   {:else}
+    <!-- svelte-ignore a11y-media-has-caption -->
     <video class="full-size" controls autoplay>
       <source {src} />
     </video>

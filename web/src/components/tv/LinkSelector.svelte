@@ -82,8 +82,7 @@
     padding: 1rem 0.5rem;
     border-bottom: 1px solid var(--color-mid-grey);
   }
-  .link > div,
-  .episode > div {
+  .link > div {
     flex: 1 1 10rem;
   }
   .link:focus,

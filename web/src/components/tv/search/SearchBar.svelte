@@ -112,7 +112,7 @@
         </button>
       </div>
       {#if imageSrc}
-        <img class="search-brand search-brand-image self-center" src={imageSrc} alt="search image">
+        <img class="search-brand search-brand-image self-center" src={imageSrc} alt="search" />
       {:else if text}
         <div class="search-brand search-brand-text self-center">{text}</div>
       {/if}
