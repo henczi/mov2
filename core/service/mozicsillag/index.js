@@ -1,9 +1,7 @@
 const fetch = require('node-fetch');
-const xmlParser = require('fast-xml-parser');
 const xray = require('x-ray');
 
 const baseUrl = 'https://mozicsillag.me';
-const getVideoInfoBaseUrl = 'https://videa.hu/videaplayer_get_xml.php?v='
 
 const x = xray({
   filters: {
@@ -24,6 +22,7 @@ async function search(options = {}) {
   let params = {};
   params['search_type'] = encodeURIComponent(options.type || 0);
   if (options.search) params['search_term'] = encodeURIComponent(options.search);
+  if (options.sync && options.sync === 'hu') params['search_sync_2'] = '2';
   if ((options.yearFrom = +options.yearFrom) && options.yearFrom >= 1900 && options.yearFrom <= year) params['search_year_from'] = options.yearFrom;
   if ((options.yearTo = +options.yearTo) && options.yearTo >= 1900 && options.yearTo <= year) params['search_year_to'] = options.yearTo;
   const paramsString = Object.keys(params).map(x => `${x}=${params[x]}`).join('&');

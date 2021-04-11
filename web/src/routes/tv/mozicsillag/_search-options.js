@@ -12,6 +12,17 @@ export let searchOptions = [
     }
   },
   {
+    key: 'sync',
+    name: 'Szinkron',
+    type: 'select',
+    props: {
+      options: [
+        { key: 'all', label: 'Mind' },
+        { key: 'hu', label: 'Magyar' },
+      ]
+    }
+  },
+  {
     key: 'sort',
     name: 'Rendezés',
     type: 'select',
