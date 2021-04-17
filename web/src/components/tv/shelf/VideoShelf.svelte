@@ -5,6 +5,7 @@
   import LinkSelector from '../LinkSelector.svelte';
   export let headerText = "";
   export let headerImage = "";
+  export let link = ".";
 
   export let manager;
   export let linkManager;
@@ -64,9 +65,9 @@
 
 <div class="shelf" bind:this={element}>
   {#if headerText}
-    <div class="shelf-header text-white">{headerText}</div>
+    <a href={link}><div class="shelf-header text-white">{headerText}</div></a>
   {:else}
-    <img height="32" src={headerImage} alt="header title {headerImage}" />
+    <a href={link}><img height="32" src={headerImage} alt="header title {headerImage}" /></a>
   {/if}
   <div class="shelf-content flex">
     {#if $manager.list && $manager.list.length}
