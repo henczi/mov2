@@ -15,7 +15,7 @@
   let selectedEpisode;
   let selectedEpisodeLinks;
 
-  $: links = (itemDetail && itemDetail.links) || selectedEpisodeLinks;
+  $: links = (itemDetail && (itemDetail.links || []).reverse()) || (selectedEpisodeLinks || []).reverse();
 
   let rootEl;
 
