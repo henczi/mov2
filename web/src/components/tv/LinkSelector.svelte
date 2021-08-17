@@ -36,9 +36,10 @@
     focusFirstRow();
   }
 
-  async function selectLink(item) {
+  async function selectLink(item, e = {}) {
+    const newTab = e.ctrlKey || e.metaKey || e.altKey || e.shiftKey || e.button === 4;
     const link = await linkManager.getLink(item.href);
-    if (link.redirect) goto("/watch?v=" + link.redirect);
+    if (link.redirect) (newTab ? open : goto)("/watch?v=" + link.redirect);
     else alert("Can not resolve this link :(");
   }
 
@@ -147,8 +148,9 @@
           <div class="links">
             {#each links as link}
               <div
+                role="link"
                 class="flex justify-between link link-row"
-                use:focusable={() => selectLink(link)}>
+                use:focusable={e => selectLink(link, e)}>
                 <div>{link.name}</div>
                 <div>{link.lang}</div>
                 <div>{link.uploadTime}</div>
