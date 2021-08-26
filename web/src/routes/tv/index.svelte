@@ -1,6 +1,6 @@
 <script>
-  import WindowTitle from '../../components/elements/WindowTitle.svelte';
-  import HomePage from '../../components/tv/HomePage.svelte';
+  import WindowTitle from '$lib/elements/WindowTitle.svelte';
+  import HomePage from '$lib/tv/HomePage.svelte';
 </script>
 
 <style>

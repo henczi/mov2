@@ -1,5 +1,5 @@
 <script>
-  import { focusable } from "../../../../helpers/focusable";
+  import { focusable } from "$lib/helpers/focusable";
   export let name;
   export let value;
   export let options;

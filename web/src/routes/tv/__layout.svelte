@@ -7,7 +7,7 @@
 
 <script>
   import { onMount } from 'svelte';
-  import { snInit, snDestroy } from './_spatial-navigation.js';
+  import { snInit, snDestroy } from '$lib/tv/_spatial-navigation.js';
 
   onMount(() => {
     snInit()

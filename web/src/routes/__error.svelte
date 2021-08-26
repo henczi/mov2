@@ -1,8 +1,17 @@
+<script context="module">
+	export function load({ error, status }) {
+		return {
+			props: {
+				error, status
+			}
+		};
+	}
+</script>
+
 <script>
+	import { dev } from '$app/env';
 	export let status;
 	export let error;
-
-	const dev = process.env.NODE_ENV === 'development';
 </script>
 
 <style>

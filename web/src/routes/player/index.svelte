@@ -1,6 +1,6 @@
 <script context="module">
-  export async function preload(page, session) {
-    return { src: page.query.src };
+  export async function load({ page }) {
+    return { props: { src: page.query.get('src') } };
   }
 </script>
 

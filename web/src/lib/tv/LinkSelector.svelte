@@ -2,9 +2,9 @@
   import { onMount, tick } from "svelte";
   import { createEventDispatcher } from "svelte";
   import { fade, scale } from "svelte/transition";
-  import { goto } from "@sapper/app";
-  import { focusable } from "../../helpers/focusable";
-  import { snOverlay } from "../../routes/tv/_spatial-navigation";
+  import { goto } from "$app/navigation";
+  import { focusable } from "$lib/helpers/focusable";
+  import { snOverlay } from "./_spatial-navigation";
   let dispatch = createEventDispatcher();
 
   export let linkManager;

@@ -1,7 +1,7 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { focusable } from "../../../helpers/focusable";
-  import Link from "../../elements/Link.svelte";
+  import { focusable } from "$lib/helpers/focusable";
+  import Link from "$lib/elements/Link.svelte";
 
   import { send, receive } from "../item-transition.js";
 

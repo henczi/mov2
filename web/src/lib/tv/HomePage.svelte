@@ -27,6 +27,6 @@
 <div class="shelf-list">
   <!-- <VideoShelf manager={shelves.mock} headerText="Home Server" /> -->
   <VideoShelf manager={shelves.mozicsilag} linkManager={mozicsillagLinkManager} headerText="MoziCsillag" link="/tv/mozicsillag"/>
-  <VideoShelf manager={shelves.inda} headerImage="inda.png" link="/tv/inda" />
-  <VideoShelf manager={shelves.videa} headerImage="videa.png" link="/tv/videa" />
+  <VideoShelf manager={shelves.inda} headerImage="/inda.png" link="/tv/inda" />
+  <VideoShelf manager={shelves.videa} headerImage="/videa.png" link="/tv/videa" />
 </div>

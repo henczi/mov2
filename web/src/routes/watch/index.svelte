@@ -1,13 +1,13 @@
 <script context="module">
-  export async function preload(page, session) {
-    return { v: page.query.v };
+  export async function load({ page }) {
+    return { props: { v: page.query.get('v') } };
   }
 </script>
 
 <script>
   import { onMount } from "svelte";
-  import WindowTitle from "../../components/elements/WindowTitle.svelte";
-  import Plyr from "../../components/player/Plyr.svelte";
+  import WindowTitle from "$lib/elements/WindowTitle.svelte";
+  import Plyr from "$lib/player/Plyr.svelte";
   export let v;
   let config;
   let error;
@@ -30,6 +30,9 @@
     background-color: black;
     width: 100vw;
     height: 100vh;
+  }
+  .full-size :global(.plyr){
+    height:100%;
   }
   .flex-center {
     display: flex;

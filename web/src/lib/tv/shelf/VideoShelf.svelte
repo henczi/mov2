@@ -1,5 +1,5 @@
 <script>
-  import { goto } from '@sapper/app';
+  import { goto } from '$app/navigation';
   import Card from "../card/VideoCard.svelte";
   import CircleButton from "../../elements/CircleButton.svelte";
   import LinkSelector from '../LinkSelector.svelte';
@@ -7,8 +7,8 @@
   export let headerImage = "";
   export let link = ".";
 
-  export let manager;
-  export let linkManager;
+  export let manager = undefined;
+  export let linkManager = undefined;
 
   let selected;
 

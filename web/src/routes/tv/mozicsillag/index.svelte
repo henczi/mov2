@@ -1,12 +1,12 @@
 <script>
   import { onMount } from "svelte";
-  import LinkSelector from "../../../components/tv/LinkSelector.svelte";
-  import WindowTitle from "../../../components/elements/WindowTitle.svelte";
-  import SearchBar from "../../../components/tv/search/SearchBar.svelte";
-  import Grid from "../../../components/tv/grid/Grid.svelte";
+  import LinkSelector from "$lib/tv/LinkSelector.svelte";
+  import WindowTitle from "$lib/elements/WindowTitle.svelte";
+  import SearchBar from "$lib/tv/search/SearchBar.svelte";
+  import Grid from "$lib/tv/grid/Grid.svelte";
   import { searchOptions } from "./_search-options.js";
   import { manager, search, init } from "./_search-manager.js";
-  import { createLinkManager } from "../../../components/tv/link-manager.js";
+  import { createLinkManager } from "$lib/tv/link-manager.js";
 
   const linkManager = createLinkManager("/api/mozicsillag/get-links?l=", "/api/mozicsillag/get-link?l=")
   let selected;

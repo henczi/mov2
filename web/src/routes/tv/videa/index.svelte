@@ -1,9 +1,9 @@
 <script>
   import { onMount } from 'svelte';
-  import { goto } from '@sapper/app';
-  import WindowTitle from '../../../components/elements/WindowTitle.svelte';
-  import SearchBar from '../../../components/tv/search/SearchBar.svelte';
-  import Grid from '../../../components/tv/grid/Grid.svelte';
+  import { goto } from '$app/navigation';
+  import WindowTitle from '$lib/elements/WindowTitle.svelte';
+  import SearchBar from '$lib/tv/search/SearchBar.svelte';
+  import Grid from '$lib/tv/grid/Grid.svelte';
   import { searchOptions } from './_search-options.js';
   import { manager, search, init } from './_search-manager.js';
 
@@ -32,7 +32,7 @@
 
 <div class="page fley">
   <div class="flex-no-shirnk search-segment">
-    <SearchBar {searchOptions} on:search={s => search(s.detail)} imageSrc="videa.png" />
+    <SearchBar {searchOptions} on:search={s => search(s.detail)} imageSrc="/videa.png" />
   </div>
 
   <div class="content-container flex-grow">

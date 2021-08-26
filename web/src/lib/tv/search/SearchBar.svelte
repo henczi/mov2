@@ -1,5 +1,5 @@
 <script>
-  import { focusable } from "../../../helpers/focusable";
+  import { focusable } from "$lib/helpers/focusable";
   import { slide } from "svelte/transition";
   import { flip } from "svelte/animate";
   import { createEventDispatcher } from "svelte";

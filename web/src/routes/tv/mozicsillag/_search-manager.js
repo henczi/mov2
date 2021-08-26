@@ -1,4 +1,4 @@
-import { createSearchManager } from "../../../components/tv/search-store.js";
+import { createSearchManager } from "$lib/tv/search-store.js";
 
 let inited = false;
 

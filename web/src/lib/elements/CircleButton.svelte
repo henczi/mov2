@@ -1,5 +1,5 @@
 <script>
-  import { focusable } from "../../helpers/focusable";
+  import { focusable } from "$lib/helpers/focusable";
   import { createEventDispatcher } from "svelte";
   export let big = false;
   export let disabled = false;
