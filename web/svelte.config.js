@@ -1,4 +1,5 @@
 import preprocess from 'svelte-preprocess';
+import adapter from '@sveltejs/adapter-static';
 
 import api from '../core/api.js';
 
@@ -23,6 +24,8 @@ const config = {
 	kit: {
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#svelte',
+		ssr: false,
+		adapter: adapter(),
 		vite: {
 			plugins: [apiMiddlewarePlugin]
 		}
