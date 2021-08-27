@@ -96,6 +96,10 @@
     {/if}
   </div>
   <div class="upload">
-    <div class="text-mid-grey">{item.userName} • {item.uploadTime}</div>
+    {#if item.userName}
+      <div class="text-mid-grey">{item.userName} • {item.uploadTime}</div>
+      {:else}
+      <div class="text-mid-grey">{item.uploadTime}</div>
+    {/if}
   </div>
 </div>
