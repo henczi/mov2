@@ -1,5 +1,4 @@
 <script>
-  import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import WindowTitle from '$lib/elements/WindowTitle.svelte';
   import SearchBar from '$lib/tv/search/SearchBar.svelte';
@@ -10,8 +9,6 @@
   function select(item) {
     goto('/watch?v=' + item.href)
   }
-
-  onMount(() => init());
 </script>
 
 <style>
@@ -32,7 +29,7 @@
 
 <div class="page fley">
   <div class="flex-no-shirnk search-segment">
-    <SearchBar {searchOptions} on:search={s => search(s.detail)} imageSrc="/inda.png" />
+    <SearchBar {searchOptions} on:init={s => init(s.detail)} on:search={s => search(s.detail)} imageSrc="/inda.png" />
   </div>
 
   <div class="content-container flex-grow">

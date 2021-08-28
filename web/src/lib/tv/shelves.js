@@ -13,8 +13,8 @@ function search(params) {
   Object.keys(shelves).forEach(x => shelves[x].search(params));
 }
 
-function initShelves() {
-  inited || (inited = true) && search({ term: '' });
+function initShelves(s) {
+  inited || (inited = true) && search(s || { term: '' });
 }
 
 export {

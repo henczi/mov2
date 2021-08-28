@@ -7,7 +7,7 @@
   export let defaultValue;
   export let value;
 
-  value = defaultValue;
+  value = value == null ? defaultValue : value;
 </script>
 
 <style>

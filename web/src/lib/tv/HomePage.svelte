@@ -1,5 +1,4 @@
 <script>
-  import { onMount, onDestroy } from "svelte";
   import { searchOptions } from "./search-options.js"
   import { createLinkManager } from "./link-manager.js"
   import { shelves, search, initShelves } from "./shelves.js";
@@ -7,8 +6,6 @@
   import VideoShelf from "./shelf/VideoShelf.svelte";
 
   const mozicsillagLinkManager = createLinkManager("/api/mozicsillag/get-links?l=", "/api/mozicsillag/get-link?l=")
-
-  onMount(() => initShelves());
 </script>
 
 <style>
@@ -21,7 +18,7 @@
 </style>
 
 <div class="flex-no-shirnk search-segment">
-  <SearchBar {searchOptions} on:search={s => search(s.detail)} />
+  <SearchBar {searchOptions} on:init={s => initShelves(s.detail)} on:search={s => search(s.detail)} />
 </div>
 
 <div class="shelf-list">

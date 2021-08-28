@@ -19,7 +19,7 @@ function createSearchManager(searchBase, preserve = true) {
     tapUpdate(o => o.list = []);
     const options = params.options || {};
     const optionsQuery = Object.keys(options).map(key => `&${key}=${options[key]}`).join('');
-    currentUnpagedQuery = `${searchBase}?search=${params.term}${optionsQuery}`;
+    currentUnpagedQuery = `${searchBase}?search=${params.term || ''}${optionsQuery}`;
     page();
   }
 

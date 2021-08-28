@@ -1,5 +1,4 @@
 <script>
-  import { onMount } from "svelte";
   import LinkSelector from "$lib/tv/LinkSelector.svelte";
   import WindowTitle from "$lib/elements/WindowTitle.svelte";
   import SearchBar from "$lib/tv/search/SearchBar.svelte";
@@ -10,8 +9,6 @@
 
   const linkManager = createLinkManager("/api/mozicsillag/get-links?l=", "/api/mozicsillag/get-link?l=")
   let selected;
-
-  onMount(() => init());
 </script>
 
 <style>
@@ -34,6 +31,7 @@
   <div class="flex-no-shirnk search-segment">
     <SearchBar
       {searchOptions}
+      on:init={s => init(s.detail)}
       on:search={s => search(s.detail)}
       text="Mozi&nbsp;&#9733;&nbsp;Csillag" />
   </div>

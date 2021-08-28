@@ -1,11 +1,13 @@
 <script>
+  import { onMount } from "svelte";
   import { focusable } from "$lib/helpers/focusable";
   import { slide } from "svelte/transition";
-  import { flip } from "svelte/animate";
   import { createEventDispatcher } from "svelte";
   import CircleButton from "../../elements/CircleButton.svelte";
   import Select from "./options/Select.svelte";
   import NumberInput from "./options/NumberInput.svelte";
+
+  import { serialize, deserialize } from "$lib/helpers/hash-serialize";
 
   let mapTypeToComponent = {
     select: Select,
@@ -23,12 +25,27 @@
   let options = {};
 
   function doSearch() {
+    location.hash = serialize({ term, ...options })
     dispatch("search", { term, options });
   }
 
   function keydown(event) {
     if (event.keyCode == 13) doSearch();
   }
+
+  onMount(() => {
+    const h = location.hash.substring(1);
+    const obj = deserialize(h);
+
+    term = obj.term;
+
+    for (const opt of searchOptions) {
+      if (obj[opt.key]) {
+        options[opt.key] = opt.type === 'number' ? (+obj[opt.key]) : obj[opt.key];
+      }
+    }
+    dispatch("init", { term, options });
+  })
 
   let optionsOpen = false;
 </script>

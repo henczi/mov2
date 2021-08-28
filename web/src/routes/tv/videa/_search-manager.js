@@ -9,8 +9,8 @@ function search(p) {
 }
 
 
-function init() {
-  inited || (inited = true) && search({ term: '' });
+function init(s) {
+  inited || (inited = true) && search(s || { term: '' });
 }
 
 export {
