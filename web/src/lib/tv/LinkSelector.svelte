@@ -15,7 +15,9 @@
   let selectedEpisode;
   let selectedEpisodeLinks;
 
-  $: links = (itemDetail && (itemDetail.links || []).reverse()) || (selectedEpisodeLinks || []).reverse();
+  $: links = itemDetail && itemDetail.links
+    ? itemDetail.links.reverse()
+    : selectedEpisodeLinks && selectedEpisodeLinks.reverse();
 
   let rootEl;
 
@@ -37,7 +39,7 @@
   }
 
   async function selectLink(item, e = {}) {
-    const newTab = e.ctrlKey || e.metaKey || e.altKey || e.shiftKey || e.button === 4;
+    const newTab = e && (e.ctrlKey || e.metaKey || e.altKey || e.shiftKey || e.button === 4);
     const link = await linkManager.getLink(item.href);
     if (link.redirect) (newTab ? open : goto)("/watch?v=" + link.redirect);
     else alert("Can not resolve this link :(");
