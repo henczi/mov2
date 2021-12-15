@@ -43,11 +43,17 @@
   .shelf .shelf-content {
     padding: 1rem 0;
     overflow-y: auto;
+
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
   }
 
   .card-container {
     margin-right: 1rem;
     width: 28rem;
+
+    scroll-snap-align: start;
   }
   .has-more-container {
     padding-right: 1rem;
