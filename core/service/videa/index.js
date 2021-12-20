@@ -65,19 +65,22 @@ async function getVideoInfo(videoUrl) {
 
   const random = getRandomString(8);
   const [a, b] = gen_code(matchedCode);
-  // const xml_req = await fetch(`https://videa.hu/videaplayer_get_xml.php?platform=desktop&f=${videoId}&lang=hu&start=0&_s=${random}&_t=${a}`)
-  // const header = xml_req.headers.get('X-Videa-XS').trim();
-  // const xml_res = await xml_req.text();
-  // const data = base64Decode(xml_res)
-  // const decode_param = b + random + header;
-  
-  // const decoded = utf8ArrayToStr(rc4(data, strToUtf8Array(decode_param)))
-  
-  // const response = xmlParser.parse(decoded, { ignoreAttributes: false });
-  
+
   const xml_req = await fetch(`https://videa.hu/videaplayer_get_xml.php?platform=desktop&f=${videoId}&lang=hu&start=0&_s=${random}&_t=${a}`)
   const xml_res = await xml_req.text();
-  const response = xmlParser.parse(xml_res, { ignoreAttributes: false });
+  
+  let decoded;
+  if (xml_res.trim()[0] === '<') /* xml */ {
+    decoded = xml_res;
+  } else /* ~ base64 */ {
+    const header = xml_req.headers.get('X-Videa-XS').trim();
+    const data = base64Decode(xml_res)
+    const decode_param = b + random + header;
+    
+    decoded = utf8ArrayToStr(rc4(data, strToUtf8Array(decode_param)))
+  }
+  
+  const response = xmlParser.parse(decoded, { ignoreAttributes: false });
 
   const s = response.videa_video.video_sources.video_source.map
     ? response.videa_video.video_sources.video_source
