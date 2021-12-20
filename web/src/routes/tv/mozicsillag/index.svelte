@@ -6,8 +6,9 @@
   import { searchOptions } from "./_search-options.js";
   import { manager, search, init } from "./_search-manager.js";
   import { createLinkManager } from "$lib/tv/link-manager.js";
+  import { createMcsAutoResolver } from "$lib/tv/mcs-auto-resolver.js";
 
-  const linkManager = createLinkManager("/api/mozicsillag/get-links?l=", "/api/mozicsillag/get-link?l=")
+  const linkManager = createLinkManager("/api/mozicsillag/get-links?l=", "/api/mozicsillag/get-link?l=", createMcsAutoResolver)
   let selected;
 </script>
 

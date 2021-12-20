@@ -10,7 +10,12 @@ async function doResolve(url) {
   for(let resolverName in resolvers) {
     const resolver = resolvers[resolverName];
     if (resolver.canResolve(url)) {
-      return await resolver.resolve(url);
+      try {
+        return await resolver.resolve(url);
+      }
+      catch {
+        return null;
+      }
     }
   }
   return null;

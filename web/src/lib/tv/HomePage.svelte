@@ -4,8 +4,9 @@
   import { shelves, search, initShelves } from "./shelves.js";
   import SearchBar from "./search/SearchBar.svelte";
   import VideoShelf from "./shelf/VideoShelf.svelte";
+  import { createMcsAutoResolver } from "./mcs-auto-resolver.js";
 
-  const mozicsillagLinkManager = createLinkManager("/api/mozicsillag/get-links?l=", "/api/mozicsillag/get-link?l=")
+  const mozicsillagLinkManager = createLinkManager("/api/mozicsillag/get-links?l=", "/api/mozicsillag/get-link?l=", createMcsAutoResolver)
 </script>
 
 <style>
