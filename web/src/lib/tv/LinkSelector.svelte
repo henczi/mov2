@@ -46,9 +46,9 @@ import Button from "$lib/elements/Button.svelte";
   }
 
   async function autoResolve(links) {
-    const [redirect, videoInfo] = await linkManager.autoResolve(links, (c, a) => {
-      console.log(`${c}/${a}`)
-      playBtnText = `${c}/${a}`;
+    const [redirect, videoInfo] = await linkManager.autoResolve(links, (c, a, s) => {
+      console.log(`${c}/${a} (${s})`)
+      playBtnText = `${c}/${a} (${s})`;
     })
     if (redirect) {
       goto("/watch?v=" + redirect)

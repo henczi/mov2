@@ -32,7 +32,7 @@ export function createMcsAutoResolver(getLink, resolveLink) {
     
         let index = 0;
         for (const link of links) {
-            updateFn(++index, links.length);
+            updateFn(++index, links.length, `${link.name} - ${link.lang}`);
             try {
                 const link2 = await getLink(link.href);
                 const info = await resolveLink(link2.redirect);
