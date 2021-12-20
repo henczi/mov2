@@ -1,6 +1,8 @@
-<script>
-  import { goto } from '$app/navigation';
-  import { onMount } from 'svelte';
-
-  onMount(() => goto('/tv'));
+<script context="module">
+	export function load() {
+		return {
+      status: 301,
+			redirect: '/tv'
+		};
+	}
 </script>
