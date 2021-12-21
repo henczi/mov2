@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
 const xray = require('x-ray');
+const ApiError = require('../../error/api-error');
 
 const baseUrl = 'https://mozicsillag.me';
 
@@ -58,7 +59,7 @@ async function getLinks(url) {
   const linksPageUrl = page.match(/href\=\"(https?:\/\/filmbirodalmak.com.*?)"/m)[1];
 
   if (!linksPageUrl) {
-    return null;
+    throw new ApiError('Can not find links page url');
   }
 
   let json;

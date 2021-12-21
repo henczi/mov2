@@ -9,6 +9,15 @@ const apiMiddlewarePlugin = {
 		server.middlewares.use('/api', (req, res, next) => {
 			req.query = (req.url.split('?')[1] || '').split('&').reduce((a, x) => (a[x.split('=')[0]] = decodeURIComponent(x.split('=')[1]), a), {});
 			res.json = function(obj) { this.end(JSON.stringify(obj)); };
+			res.status = function(code, message) {
+				if (code) this.statusCode = code;
+				if (message) this.statusMessage = message;
+				return this;
+			}
+			res.redirect = function(url) {
+				this.status(302)
+				this.setHeader('Location', url)
+			}
 			next();
 		});
 		server.middlewares.use('/api', api);

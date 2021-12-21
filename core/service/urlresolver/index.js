@@ -1,3 +1,5 @@
+const ApiError = require('../../error/api-error.js');
+
 const resolvers = {
   clipwatching: new (require('./resolvers/clipwatching.js')),
   videobin: new (require('./resolvers/videobin.js')),
@@ -10,15 +12,10 @@ async function doResolve(url) {
   for(let resolverName in resolvers) {
     const resolver = resolvers[resolverName];
     if (resolver.canResolve(url)) {
-      try {
-        return await resolver.resolve(url);
-      }
-      catch {
-        return null;
-      }
+      return await resolver.resolve(url);
     }
   }
-  return null;
+  throw new ApiError(`No resolver for url: ${url}`);
 }
 
 module.exports = {

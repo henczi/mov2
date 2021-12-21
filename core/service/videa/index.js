@@ -9,7 +9,8 @@ const {
   base64Decode,
   strToUtf8Array,
   utf8ArrayToStr
-} = require('./helper')
+} = require('./helper');
+const ApiError = require('../../error/api-error');
 
 const getVideoInfoBaseUrl = 'https://videa.hu/videaplayer_get_xml.php?v='
 
@@ -54,12 +55,12 @@ async function search({ search, page = 1, category = 0 }) {
 async function getVideoInfo(videoUrl) {
   const pageHTML = await fetch(videoUrl).then(x => x.text());
   const videoIdMatch = pageHTML.match(/src=\"\/player\?f=(.*?)\&/);
-  if (!videoIdMatch) return {}; // FAIL
+  if (!videoIdMatch) throw new ApiError('Can not parse videoId'); // FAIL
 
   const videoId = videoIdMatch[1];
   const playerHTML = await fetch(`https://videa.hu/videojs_player?f=${videoId}`).then(x => x.text());
   const codeMatch = playerHTML.match(/var _xt = \"(.*?)\"/);
-  if (!codeMatch) return {}; // FAIL
+  if (!codeMatch) throw new ApiError('Can not find player code') // FAIL
 
   const matchedCode = codeMatch[1];
 
