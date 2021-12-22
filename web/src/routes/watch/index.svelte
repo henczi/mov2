@@ -14,9 +14,14 @@
   let title = "Loading video";
 
   onMount(async () => {
-    const videoInfo = await fetch(`/api/url-resolver/resolve?l=${v}`).then(x =>
-      x.json()
-    );
+    const videoInfoReq = await fetch(`/api/url-resolver/resolve?l=${v}`);
+    const videoInfo = await videoInfoReq.json();
+
+    if (!videoInfoReq.ok || videoInfo.error) {
+      error = videoInfo?.error?.msg || 'Something went wrong';
+      return;
+    }
+
     title = videoInfo && videoInfo.title;
     config = videoInfo;
     if (!config) {

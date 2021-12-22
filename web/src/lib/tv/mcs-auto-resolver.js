@@ -36,7 +36,7 @@ export function createMcsAutoResolver(getLink, resolveLink) {
             try {
                 const link2 = await getLink(link.href);
                 const info = await resolveLink(link2.redirect);
-                if (info) return [link2.redirect, info];
+                if (info && !info.error) return [link2.redirect, info];
             } catch {}
         }
 
