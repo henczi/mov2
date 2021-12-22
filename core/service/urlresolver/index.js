@@ -4,6 +4,7 @@ const resolvers = {
   clipwatching: new (require('./resolvers/clipwatching.js')),
   videobin: new (require('./resolvers/videobin.js')),
   vidoza: new (require('./resolvers/vidoza.js')),
+  streamtape: new (require('./resolvers/streamtape.js')),
   indavideo: new (require('./resolvers/indavideo.js')),
   videa: new (require('./resolvers/videa.js')),
 }
