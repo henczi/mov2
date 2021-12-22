@@ -42,6 +42,7 @@
         }
       });
     }
+    return () => player.destroy();
   }
 
   onMount(() => createPlyrVideo());
