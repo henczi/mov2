@@ -20,6 +20,7 @@ function mapper(x) {
     if (name.includes('vidoza')) point += 5;
     if (name.includes('videobin')) point += 4;
     if (name.includes('clipwatching')) point += 4;
+    if (name.includes('streamlare')) point += 3;
     if (name.includes('streamtape')) point += 3;
 
     return point;
