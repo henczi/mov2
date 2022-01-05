@@ -11,14 +11,7 @@
 
 <style>
   .grid-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-
-  .grid-item-container {
-    flex-grow: 1;
-    flex-basis: 1rem;
+    display: grid;
   }
 
   .current-page {
@@ -38,18 +31,12 @@
   </div>
 {:else if $manager && $manager.list}
   <div class="page-result">
-    <div class="grid-container">
+    <div class="grid-container" style="grid-template-columns: repeat(auto-fill, minmax({posterWidth}rem, 1fr))">
       {#each $manager.list as item}
-        <div class="grid-item-container" style="min-width:{posterWidth}rem; max-width:{posterWidth * 2}rem">
+        <div class="grid-item-container">
           <Card {posterAspectRatio} {item} on:select={() => dispatch('select', item)} />
         </div>
       {/each}
-      <div class="grid-item-container"></div>
-      <div class="grid-item-container"></div>
-      <div class="grid-item-container"></div>
-      <div class="grid-item-container"></div>
-      <div class="grid-item-container"></div>
-      <div class="grid-item-container"></div>
     </div>
 
     <div class="paginator flex justify-center">
