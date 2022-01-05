@@ -9,6 +9,8 @@
 
   export let manager = undefined;
   export let linkManager = undefined;
+  export let posterWidth = 25;
+  export let posterAspectRatio = 16/9;
 
   let selected;
 
@@ -51,7 +53,6 @@
 
   .card-container {
     margin-right: 1rem;
-    width: 28rem;
 
     scroll-snap-align: start;
   }
@@ -78,8 +79,8 @@
   <div class="shelf-content flex">
     {#if $manager.list && $manager.list.length}
       {#each $manager.list as item}
-        <div class="card-container flex-no-shrink">
-          <Card {item} on:select={() => select(item)} />
+        <div class="card-container flex-no-shrink" style="width: {posterWidth}rem;">
+          <Card {item} {posterAspectRatio} on:select={() => select(item)} />
         </div>
       {/each}
       {#if $manager.hasMore && !$manager.loading}

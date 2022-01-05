@@ -8,6 +8,7 @@
   const dispatch = createEventDispatcher();
 
   export let item;
+  export let posterAspectRatio = 16/9;
   let placeholderImage =
     "https://via.placeholder.com/350x200/333333/ACACAC/?text=No+Image";
 
@@ -40,7 +41,6 @@
   }
 
   .card-image .image {
-    height: 16rem;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -82,7 +82,7 @@
     <div class="card-image">
       <div
         class="image bg-black"
-        style="background-image: url({item.image || placeholderImage})" />
+        style="aspect-ratio:{posterAspectRatio}; background-image: url({item.image || placeholderImage})" />
       <div class="duration-label text-lighter bg-darker">{item.duration}</div>
     </div>
   </Link>

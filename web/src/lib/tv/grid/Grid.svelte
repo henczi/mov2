@@ -4,6 +4,8 @@
   import CircleButton from '../../elements/CircleButton.svelte';
   import { createEventDispatcher } from "svelte";
   export let manager;
+  export let posterWidth = 25;
+  export let posterAspectRatio = 16/9;
   const dispatch = createEventDispatcher();
 </script>
 
@@ -15,8 +17,6 @@
   }
 
   .grid-item-container {
-    min-width: 25rem;
-    max-width: 50rem;
     flex-grow: 1;
     flex-basis: 1rem;
   }
@@ -40,8 +40,8 @@
   <div class="page-result">
     <div class="grid-container">
       {#each $manager.list as item}
-        <div class="grid-item-container">
-          <Card {item} on:select={() => dispatch('select', item)} />
+        <div class="grid-item-container" style="min-width:{posterWidth}rem; max-width:{posterWidth * 2}rem">
+          <Card {posterAspectRatio} {item} on:select={() => dispatch('select', item)} />
         </div>
       {/each}
       <div class="grid-item-container"></div>

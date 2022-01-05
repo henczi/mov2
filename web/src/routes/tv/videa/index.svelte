@@ -33,6 +33,6 @@
   </div>
 
   <div class="content-container flex-grow">
-    <Grid {manager} on:select={event => select(event.detail)}></Grid>
+    <Grid posterWidth={28} posterAspectRatio={16/9} {manager} on:select={event => select(event.detail)}></Grid>
   </div>
 </div>
