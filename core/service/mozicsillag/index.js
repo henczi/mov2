@@ -56,7 +56,7 @@ async function getLinks(url) {
   // TODO: validation
   const isSorozat = url.includes('/sorozat/');
   const page = await fetch(url).then(x => x.text());
-  const linksPageUrl = page.match(/href\=\"(https?:\/\/filmbirodalmak.com.*?)"/m)[1];
+  const linksPageUrl = page.match(/href\=\"(https?:\/\/filmbirodalmak.com.*?)"/m)[1]?.replace('http:', 'https:');
 
   if (!linksPageUrl) {
     throw new ApiError('Can not find links page url');
