@@ -8,6 +8,7 @@ const resolvers = {
   streamlare: new (require('./resolvers/streamlare.js')),
   indavideo: new (require('./resolvers/indavideo.js')),
   videa: new (require('./resolvers/videa.js')),
+  voe: new (require('./resolvers/voe.js')),
 }
 
 async function doResolve(url) {
