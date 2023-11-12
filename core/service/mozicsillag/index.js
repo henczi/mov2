@@ -11,6 +11,7 @@ const x = xray({
     prependDomain: v => v && (baseUrl + v),
     parseHossz: v => v && (v.match(/Hossz: (\d+ perc)/) || [])[1] || null,
     parseDate: v => v && ((v.match(/(\d{4}\/\d{2}\/\d{2})/) || [])[1] || '').replace(/\//g, '-') || null,
+    lastSegment: v => v.split('/').reverse().find(x => !!x)
   }
 })
 
@@ -40,6 +41,7 @@ async function search(options = {}) {
         image: '.movie-holder img@data-original | prependDomain',
         duration: '.movie-holder .cover-surface | parseHossz',
         uploadTime: '.movie-holder .lastLink | parseDate',
+        imdb: x('a@href', 'a[target="_blank"][rel="nofollow"]:not(.button)@href | lastSegment')
         // year: '.movie-holder .extra .text-left | trim',
       }
     ])
