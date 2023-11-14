@@ -11,10 +11,11 @@
     align-self: center;
     text-align: center;
     flex-shrink: 0;
-    width: 4rem;
-    height: 4rem;
+    width: 3rem;
+    height: 3rem;
     padding: 0.75rem;
     border-radius: 50%;
+    cursor: pointer;
   }
 
   .button:disabled {

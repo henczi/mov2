@@ -24,7 +24,7 @@
 
 <div class="shelf-list">
   <!-- <VideoShelf manager={shelves.mock} headerText="Home Server" /> -->
-  <VideoShelf posterWidth={18} posterAspectRatio={2/3} manager={shelves.mozicsilag} linkManager={mozicsillagLinkManager} headerText="MoziCsillag" link="/tv/mozicsillag"/>
+  <VideoShelf posterWidth={18} posterAspectRatio={2/3} manager={shelves.mozicsilag} linkManager={mozicsillagLinkManager} headerText="moziCsillag" link="/tv/mozicsillag"/>
   <VideoShelf posterWidth={28} posterAspectRatio={16/9} manager={shelves.inda} headerImage="/inda.png" link="/tv/inda" />
   <VideoShelf posterWidth={28} posterAspectRatio={16/9} manager={shelves.videa} headerImage="/videa.png" link="/tv/videa" />
 </div>

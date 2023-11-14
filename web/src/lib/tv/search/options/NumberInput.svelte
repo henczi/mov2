@@ -11,9 +11,17 @@
 </script>
 
 <style>
+  fieldset {
+    border-radius: 12px;
+    border-width: 1px;
+    border-color: rgba(255,255,255,.2);
+    padding-right: .25rem;
+    padding-bottom: .25rem;
+    padding-left: .25rem;
+  }
   .title {
-    font-size: 1.25rem;
-    font-weight: bold;
+    font-size: .85rem;
+    font-weight: normal;
     margin-right: 1rem;
   }
   .append {
@@ -23,8 +31,9 @@
   }
   input {
     padding: 0.5rem 1rem;
-    margin-left: 0.5rem;
+    margin: 0.25rem;
     border: 2px solid transparent;
+    border-radius: 12px;
   }
 
   input:hover,
@@ -34,8 +43,8 @@
   }
 </style>
 
-<div class="flex items-center">
-  <div class="title">{name}</div>
+<fieldset class="flex items-center">
+  <legend class="title">{name}{append}</legend>
   <input
     type="number"
     {min} {max}
@@ -43,5 +52,5 @@
     on:focus={function(){ this.select() }}
     use:focusable
     class="bg-darker text-lighter"/>
-  <div class="append">{append}</div>
-</div>
+  <!-- <div class="append">{append}</div> -->
+</fieldset>

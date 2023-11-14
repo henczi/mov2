@@ -4,6 +4,7 @@
 
 html {
 	min-height: 100%;
+	background-color: #2d3748;
 }
 
 body {
@@ -82,6 +83,10 @@ input, button {
 	font-family: inherit;
 	border: 0;
 	background: transparent
+}
+
+.spinner {
+	animation: fa-spin 975ms ease-in-out infinite;
 }
 
 /* outline */

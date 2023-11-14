@@ -149,7 +149,7 @@ import Button from "$lib/elements/Button.svelte";
     </div>
   {:else}
     <div class="loading self-center text-light fa-5x">
-      <i class="fas fa-circle-notch fa-spin" />
+      <i class="fas fa-life-ring spinner" />
     </div>
   {/if}
 </div>

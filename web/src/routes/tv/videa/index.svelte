@@ -12,27 +12,33 @@
 </script>
 
 <style>
-.page {
-  height: 100%;
-  padding: 1rem 1rem 0 1rem;
-}
-.search-segment {
-  padding-right: 1rem;
-}
-.content-container{
-  margin-top: 2rem;
-  overflow-y: auto;
-}
+  .page {
+    z-index: 1;
+    height: 100%;
+    margin-top: 5rem;
+    padding: 1rem 1rem 0 1rem;
+    overflow-y: auto;
+  }
+  .search-segment {
+    z-index: 2;
+    padding-right: 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
 </style>
 
-<WindowTitle title="Videa"/>
+<WindowTitle title="Videa" />
 
-<div class="page fley">
-  <div class="flex-no-shirnk search-segment">
-    <SearchBar {searchOptions} on:init={s => init(s.detail)} on:search={s => search(s.detail)} imageSrc="/videa.png" />
-  </div>
+<div class="search-segment">
+  <SearchBar
+    {searchOptions}
+    on:init={s => init(s.detail)}
+    on:search={s => search(s.detail)}
+    imageSrc="/videa.png" />
+</div>
 
-  <div class="content-container flex-grow">
-    <Grid posterWidth={28} posterAspectRatio={16/9} {manager} on:select={event => select(event.detail)}></Grid>
-  </div>
+<div class="page">
+  <Grid  posterWidth={25} posterAspectRatio={16/9} {manager} on:select={event => select(event.detail)} />
 </div>

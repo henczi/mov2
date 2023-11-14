@@ -58,7 +58,7 @@
         <h1 class="text-light">{error}</h1>
       {:else}
         <div class="self-center flex justify-center text-light fa-5x">
-          <i class="fas fa-circle-notch fa-spin" />
+          <i class="fas fa-life-ring spinner" />
         </div>
       {/if}
     </div>

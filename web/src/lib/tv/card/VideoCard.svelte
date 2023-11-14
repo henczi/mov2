@@ -43,19 +43,9 @@
     padding: 4px;
   }
 
-  .card:focus .card-info {
-    background-color: var(--color-white);
-    color: var(--color-dark);
-  }
-
   .card:focus .card-image {
     outline: 4px solid white;
   }
-
-  .card:focus .card-info {
-    border: 4px solid white;
-  }
-  
 
   .card:focus .card-image,
   .card:hover .card-image {
@@ -154,7 +144,7 @@
     </div>
   </Link>
 
-  <div class="card-info">
+  <div class="card-info flex-grow">
     <div class="info">
       <Link href="/watch?v={item.href}">
         <div class="title">{item.title}</div>
@@ -163,7 +153,7 @@
         <p class="description">{item.description}</p>
       {/if}
     </div>
-    {imdb?.genre}
+    {imdb?.genre ?? ''}
     <div class="upload">
       {#if item.userName}
         <div class="text-mid-grey">{item.userName} • {item.uploadTime}</div>

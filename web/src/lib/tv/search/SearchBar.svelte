@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { focusable } from "$lib/helpers/focusable";
-  import { slide } from "svelte/transition";
+  import { fly, slide } from "svelte/transition";
   import { createEventDispatcher } from "svelte";
   import CircleButton from "../../elements/CircleButton.svelte";
   import Select from "./options/Select.svelte";
@@ -55,16 +55,9 @@
     padding: 1rem 0;
   }
 
-  .search-container {
-    margin-bottom: 1rem;
-  }
-  .search-container .search {
-    border-bottom: 2px solid;
-  }
   .search-container .search input {
-    font-size: 3rem;
+    font-size: 1.2rem;
     width: 100%;
-    font-weight: bold;
     background-color: transparent;
     color: var(--color-lighter);
   }
@@ -75,9 +68,10 @@
 
   .search-container .search button {
     background-color: transparent;
-    font-size: 2rem;
-    padding: 0.75rem;
+    font-size: 1.5rem;
+    padding: 0.5rem;
     margin-left: 1rem;
+    cursor: pointer;
   }
   .search-container .search button:hover,
   .search-container .search button:focus {
@@ -85,7 +79,8 @@
   }
 
   .options {
-    margin: 1rem 0;
+    margin: .5rem 0;
+    padding: .75rem 2rem;
     overflow: hidden;
   }
 
@@ -93,15 +88,23 @@
     margin-bottom: 0.5rem;
   }
 
+  .search-brand-container {
+    margin: 0 2rem;
+  }
+  .search-text-container  {
+    padding: .25rem 1.25rem;
+    border-radius: 12px;
+  }
   .search-brand-image {
     height: 32px;
   }
   .search-brand-text {
-    font-size: 2.25rem;
+    font-size: 1.75rem;
     font-weight: bold;
   }
+
   @media(max-width: 400px) {
-    .search-brand {
+    .search-brand-container {
       display: none;
     }
     .search-container .search input {
@@ -116,7 +119,16 @@
 <div class="search-bar text-lighter">
   <div class="search-container flex justify-between">
     <div class="search flex">
-      <div class="flex">
+      {#if imageSrc || text}
+        <div class="search-brand-container flex">
+          {#if imageSrc}
+            <img class="search-brand search-brand-image self-center" src={imageSrc} alt="search" />
+          {:else if text}
+            <div class="search-brand search-brand-text self-center">{text}</div>
+          {/if}
+        </div>
+      {/if}
+      <div class="search-text-container bg-darker flex">
         <input
           use:focusable
           bind:value={term}
@@ -128,11 +140,7 @@
           <i class="fas fa-search" />
         </button>
       </div>
-      {#if imageSrc}
-        <img class="search-brand search-brand-image self-center" src={imageSrc} alt="search" />
-      {:else if text}
-        <div class="search-brand search-brand-text self-center">{text}</div>
-      {/if}
+
     </div>
     <CircleButton on:click={() => (optionsOpen = !optionsOpen)}>
       <i class="fas fa-cogs" />
@@ -140,7 +148,7 @@
   </div>
 
   {#if optionsOpen}
-    <div class="options" transition:slide>
+    <div class="options bg-dark" transition:fly={{ y: -10, duration: 200 }}>
       <div class="flex flex-wrap justify-between">
         {#each searchOptions as so}
           <div class="search-option-container">

@@ -14,32 +14,34 @@
 
 <style>
   .page {
+    z-index: 1;
     height: 100%;
+    margin-top: 5rem;
     padding: 1rem 1rem 0 1rem;
+    overflow-y: auto;
   }
   .search-segment {
+    z-index: 2;
     padding-right: 1rem;
-  }
-  .content-container {
-    margin-top: 2rem;
-    overflow-y: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
   }
 </style>
 
 <WindowTitle title="Mozicsillag" />
 
-<div class="page fley">
-  <div class="flex-no-shirnk search-segment">
-    <SearchBar
-      {searchOptions}
-      on:init={s => init(s.detail)}
-      on:search={s => search(s.detail)}
-      text="Mozi&nbsp;&#9733;&nbsp;Csillag" />
-  </div>
+<div class="search-segment">
+  <SearchBar
+    {searchOptions}
+    on:init={s => init(s.detail)}
+    on:search={s => search(s.detail)}
+    text="moziCsillag" />
+</div>
 
-  <div class="content-container flex-grow">
-    <Grid  posterWidth={16} posterAspectRatio={2/3} {manager} on:select={event => (selected = event.detail)} />
-  </div>
+<div class="page">
+  <Grid  posterWidth={16} posterAspectRatio={2/3} {manager} on:select={event => (selected = event.detail)} />
 </div>
 
 {#if selected}
