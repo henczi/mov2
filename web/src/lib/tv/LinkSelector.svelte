@@ -1,12 +1,13 @@
 <script>
   import { onMount, tick } from "svelte";
   import { createEventDispatcher } from "svelte";
-  import { fade, scale } from "svelte/transition";
+  import { fade, fly, scale } from "svelte/transition";
   import { goto } from "$app/navigation";
   import { focusable } from "$lib/helpers/focusable";
   import { snOverlay } from "./_spatial-navigation";
 import { current_component } from "svelte/internal";
 import Button from "$lib/elements/Button.svelte";
+    import CircleButton from "$lib/elements/CircleButton.svelte";
   let dispatch = createEventDispatcher();
 
   export let linkManager;
@@ -34,10 +35,18 @@ import Button from "$lib/elements/Button.svelte";
     }
   }
 
+  async function focusPlay() {
+    await tick();
+    const el = rootEl.querySelector(".play-button .focusable");
+    if (el) {
+      el.focus();
+    }
+  }
+
   function selectEpisode(episode) {
     selectedEpisode = episode;
     selectedEpisodeLinks = episode.links;
-    focusFirstRow();
+    focusPlay();
   }
 
   function back() {
@@ -65,7 +74,11 @@ import Button from "$lib/elements/Button.svelte";
 
   onMount(async () => {
     itemDetail = await linkManager.getLinks(item.href);
-    focusFirstRow();
+    if (itemDetail.episodes) {
+      focusFirstRow();
+    } else {
+      focusPlay();
+    }
   });
 
   onMount(snOverlay);
@@ -78,73 +91,79 @@ import Button from "$lib/elements/Button.svelte";
   on:click={(e) => e.target === e.currentTarget && dispatch("close")}
 >
   {#if itemDetail}
-    <div class="container bg-dark text-lighter">
-      <div class="buttons">
-        <div class="button" use:focusable={() => dispatch("close")}>
-          <i class="fas fa-fw fa-times" />
+    <div class="container">
+      <div class="buttons text-lighter">
+        <div class="button bg-darker flex justify-center items-center" style="width: 80px; height: 80px;" use:focusable={() => dispatch("close")} transition:scale={{ duration: 200 }}>
+          <i class="fas fa-fw fa-2x fa-times" />
         </div>
         {#if links && itemDetail && itemDetail.episodes}
-          <div class="button" use:focusable={() => back()}>
+          <div class="button bg-darker flex justify-center items-center" style="width: 55px; height: 55px;" use:focusable={() => back()} transition:scale={{ duration: 200 }}>
             <i class="fas fa-fw fa-chevron-left" />
           </div>
         {/if}
       </div>
-      <div class="link-selector" transition:scale>
-        <div class="flex">
+      <div class="link-selector bg-dark text-lighter flex" transition:fly={{ x: 300, duration: 250 }}>
+        <div class="info fley">
           {#if itemDetail.image}
             <div
-              style="margin: 1rem; width: 200px; height: 300px;"
-              class="flex-no-shrink"
+              class="poster flex-no-shrink flex"
+              in:fly={{ y: 100, duration: 200, delay: 150 }}
+
             >
-              <img style="width: 100%;" src={itemDetail.image} alt="poster" />
+              <img style="width: 100%;" src={item.imdb?.poster || itemDetail.image} alt="poster" />
+              {#if links}
+                <div class="play-button">
+                  <CircleButton on:click={() => autoResolve(links)}>
+                    <i class="fas fa-fw fa-play" />
+                  </CircleButton>
+                </div>
+              {/if}
             </div>
           {/if}
           <div>
-            <h2>{itemDetail.title}</h2>
-            <p>{itemDetail.description}</p>
-            {#if links}
-              <Button on:click={() => autoResolve(links)}>
-                <i class="fas fa-fw fa-play" />
-                {playBtnText}
-              </Button>
-            {/if}
+            <h2 in:fly={{ y: 100, duration: 200, delay: 300 }}>{itemDetail.title}</h2>
+            <p in:fly={{ y: 100, duration: 200, delay: 400 }}>{itemDetail.description}</p>
           </div>
         </div>
-        <hr />
-        {#if itemDetail.episodes && !selectedEpisodeLinks}
-          <h3>Episodes</h3>
-          <div class="episodes">
-            {#each itemDetail.episodes as episode}
-              <div
-                class="episode link-row"
-                use:focusable={() => selectEpisode(episode)}
-              >
-                {episode.name}
-              </div>
-            {/each}
-          </div>
-        {/if}
-        {#if links}
-          {#if itemDetail.episodes}
-            <h2>{selectedEpisode.name}</h2>
+        <div class="flex-grow">
+          <div><small>&nbsp;{playBtnText}&nbsp;<small></div>
+          {#if itemDetail.episodes && !selectedEpisodeLinks}
+            <h3>/ EPISODES</h3>
+            <div class="episodes items-center">
+              {#each itemDetail.episodes as episode, index}
+                <div
+                  class="episode bg-darker link-row justify-center items-center"
+                  in:fly={{ y: 100, duration: 200, delay: index * 50 }}
+                  use:focusable={() => selectEpisode(episode)}
+                >
+                  {episode.name}
+                </div>
+              {/each}
+            </div>
           {/if}
-          <h3>Links</h3>
-          <div class="links">
-            {#each links as link}
-              <div
-                role="link"
-                class="flex justify-between link link-row"
-                use:focusable={(e) => selectLink(link, e)}
-              >
-                <div>{link.name}</div>
-                <div>{link.lang}</div>
-                <div>{link.uploadTime}</div>
-                <div>{link.views}</div>
-                <div>{link.uploader}</div>
-              </div>
-            {/each}
-          </div>
-        {/if}
+          {#if links}
+            {#if itemDetail.episodes}
+              <h2>{selectedEpisode.name}</h2>
+            {/if}
+            <h3>/ LINKS</h3>
+            <div class="links items-center">
+              {#each links as link, index}
+                <div
+                  role="link"
+                  class="flex justify-between link bg-darker link-row justify-center items-center"
+                  in:fly={{ y: 100, duration: 200, delay: 200 + index * 20 }}
+                  use:focusable={(e) => selectLink(link, e)}
+                >
+                  <div>{link.name}</div>
+                  <div>{link.lang}</div>
+                  <div>{link.uploadTime}</div>
+                  <div>{link.views}</div>
+                  <div>{link.uploader}</div>
+                </div>
+              {/each}
+            </div>
+          {/if}
+        </div>
       </div>
     </div>
   {:else}
@@ -160,18 +179,23 @@ import Button from "$lib/elements/Button.svelte";
   }
   .container {
     display: flex;
-    width: 80%;
-    height: 80%;
+    align-items: center;
+    width: 100%;
+    height: 100%;
   }
   .container .buttons {
+    flex-shrink: 0;
     display: flex;
-    flex-direction: column;
+    padding: 2rem;
+    align-items: center;
+    gap: 1rem;
   }
   .container .buttons .button {
     padding: 0.5rem;
     font-weight: bold;
     text-align: center;
-    border-right: 1px solid var(--color-white);
+    border-radius: 50%;
+    padding: 1rem
   }
   .container .buttons .button:last-child {
     flex-grow: 1;
@@ -180,11 +204,40 @@ import Button from "$lib/elements/Button.svelte";
     padding: 2.5rem;
     overflow-y: scroll;
     flex-grow: 1;
+    height: 100%;
+    border-radius: 4.5rem 0 0 4.5rem;
   }
+  .info {
+    flex-shrink: 0;
+    width: 260px;
+    margin-right: 2rem;
+  }
+  .poster {
+    width: 100%;
+    max-height: 50%;
+    overflow: hidden;
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 0 20px 0 black;
+  }
+  .play-button {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
   .link,
   .episode {
     padding: 1rem 0.5rem;
-    border-bottom: 1px solid var(--color-mid-grey);
+    border-radius: 12px;
+    margin-bottom: 0.75rem;
+    padding: .75rem 1.5rem;
+
   }
   .link > div {
     flex: 1 1 10rem;

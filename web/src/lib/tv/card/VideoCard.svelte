@@ -27,6 +27,7 @@
       metascore: resp.Metascore,
       rotten: resp.Ratings.find(x => x.Source === 'Rotten Tomatoes')?.Value,
     }
+    item.imdb = imdb;
   }
 
   $: item.imdb && loadImdb(item.imdb);
